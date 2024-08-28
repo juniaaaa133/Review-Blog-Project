@@ -1,22 +1,26 @@
 import React from 'react'
 import Blog from './Blog'
+import { BLOG } from '../../utils/interfaces/blog'
 
 const BlogCtn = ({
     blogs
 } : {
-    blogs : any
+    blogs :BLOG[]
 }
 ) => {
   return (
     <div className=' grid grid-cols-3 justify-center w-fit mx-auto gap-[10px] px-[20px] items-center'>
-        <Blog />
-        <Blog />
-        <Blog />
-        <Blog />
-        <Blog />
-        <Blog />
-
-        
+      {
+        blogs.map((blog,index)=>(
+          <Blog 
+          title={blog.title}
+          poster={blog.poster}
+          isOnline={blog.isOnline}
+          rating={blog.rating}
+          category={blog.category}
+          />
+        ))
+      }
     </div>
   )
 }
