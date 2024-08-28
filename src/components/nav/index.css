@@ -1,0 +1,10 @@
+.menu-icn {
+    display: none;
+}
+@media (max-width: 640px) {
+    .menu-icn{
+        display: block;
+    }
+
+    
+}
