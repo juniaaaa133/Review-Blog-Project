@@ -3,6 +3,7 @@ import Blog from "./components/blog/Blog";
 import Layout from "./components/router-layout/Layout";
 import Home from "./page/home/Home";
 import AuthFormPage from "./page/auth-form/AuthFormPage";
+import CategoryPage from "./page/categoryPage/CategoryPage";
 
 export function App() {
 
@@ -14,6 +15,10 @@ export function App() {
         {
           index : true,
           element : <Home />,
+        },
+        {
+          path : "/categories",
+          element : <CategoryPage />
         },
         {
           path : "/login",

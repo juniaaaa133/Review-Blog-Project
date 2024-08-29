@@ -1,4 +1,5 @@
 import { BLOG } from "./interfaces/blog";
+import { CATEGORY } from "./interfaces/category";
 
 export const blogs : BLOG[] = [
     {
@@ -15,4 +16,24 @@ export const blogs : BLOG[] = [
         rating : '3.6',
         category : 'Action'
     },
+]
+
+export const categories : CATEGORY[] = [
+    {name : "Action"},
+    {name : "Adventure"},
+    {name : "Arcade"},
+    {name : "Board"},
+    {name : "Card"},
+    {name : "Casion"},
+    {name : "Casual"},
+    {name : "Educational"},
+    {name : "Puzzle"},
+    {name : "Racing"},
+    {name : "Music"},
+    {name : "Role Playing"},
+    {name : "Simulation"},
+    {name : "Sports"},
+    {name : "Strategy"},
+    {name : "Survival"},
+    {name : "Word"},
 ]

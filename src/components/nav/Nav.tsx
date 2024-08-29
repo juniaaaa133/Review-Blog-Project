@@ -22,7 +22,7 @@ const Nav = () => {
         <h2 className='fontcl2 text-[20px] sys-f'>Mobocat</h2>
   <div className="flex ml-[30px] items-center gap-[20px]">
   <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
-        <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
+        <NavLink to={'/categories'} className={`md:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
         <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
   </div>
       </div>
@@ -90,7 +90,7 @@ const Nav = () => {
       </div>
       <div className="flex flex-col gap-[10px]">
   <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
-        <NavLink to={'/'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
+        <NavLink to={'/categories'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
         <NavLink to={'/'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
       </div>
     </div>
