@@ -4,6 +4,7 @@ import Layout from "./components/router-layout/Layout";
 import Home from "./page/home/Home";
 import AuthFormPage from "./page/auth-form/AuthFormPage";
 import CategoryPage from "./page/categoryPage/CategoryPage";
+import FIlteredPage from "./page/filteredPage/FIlteredPage";
 
 export function App() {
 
@@ -18,7 +19,11 @@ export function App() {
         },
         {
           path : "/categories",
-          element : <CategoryPage />
+          element : <CategoryPage />,
+        },
+        {
+          path : '/categories/:category',
+          element : <FIlteredPage />
         },
         {
           path : "/login",
