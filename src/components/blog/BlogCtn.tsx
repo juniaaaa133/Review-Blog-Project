@@ -9,7 +9,7 @@ const BlogCtn = ({
 }
 ) => {
   return (
-    <div className='bl-ctn  justify-center w-fit mx-auto gap-[10px] px-[20px] items-center'>
+    <div className='bl-ctn justify-center mx-auto gap-[10px] px-[20px] items-center'>
       {
         blogs.map((blog,index)=>(
           <Blog 
