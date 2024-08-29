@@ -19,7 +19,7 @@ const Nav = () => {
     <div className={`sticky z-[7] top-0 flex justify-between items-center w-full h-[55px] py-[10px] px-[40px] bg-white shadow-md`}>
       <div className="flex items-center justify-between gap-[15px]">
         <p onClick={()=>setIsOpened(true)} className="MD:hidden text-[20px] bcu"><FiMenu/></p>
-        <h2 className='fontcl2 text-[20px] sys-f'>Mobocat</h2>
+        <h2 className='fontcl2 sm:text-[17px] text-[20px] sys-f'>Mobocat</h2>
   <div className="flex ml-[30px] items-center gap-[20px]">
   <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
         <NavLink to={'/categories'} className={`md:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
