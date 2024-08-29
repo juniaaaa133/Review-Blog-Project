@@ -12,7 +12,7 @@ const Blog = ({
   category : string,
   poster : string,
   rating : string,
-  isOnline : boolean
+  isOnline : boolean | null
 }) => {
   return (
     <div className='bl-main bcu shadow-lg'>
@@ -20,6 +20,7 @@ const Blog = ({
         <div className="bl-layout"></div>
         <div className="bl-info">
             <div className="flex flex-col gap-[2px]">
+
             <h3 className="fontcl main-f text-[17px]">{title}</h3>
             <p className="fontcl6 main-f text-[14px]">{category}</p>
             <div className="flex text-[13px] main-f fontcl6 gap-[5px]">

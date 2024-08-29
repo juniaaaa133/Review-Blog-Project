@@ -7,7 +7,7 @@ import { blogs } from '../../utils/data'
 const Home = () => {
   return (
 <div className="mt-[20px]">
-{/* <BlogCtn blogs={blogs} /> */}
+<BlogCtn blogs={blogs} />
 </div>
   )
 }

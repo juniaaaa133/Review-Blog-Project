@@ -40,7 +40,7 @@ const Nav = () => {
       <img onClick={()=>setIsOpenedPfp(!isOpenedPfp)} src={'/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
       </div>
     </div>
-    <div  className={`fixed w-full flex trans  flex-col items-center h-fit bg-[#ffffff] p-[10px] ${isOpenedSearchBar ? 'top-[55px]' : "top-[-60px]"}`}>
+    <div  className={`fixed z-[5] w-full flex trans  flex-col items-center h-fit bg-[#ffffff] p-[10px] ${isOpenedSearchBar ? 'top-[55px]' : "top-[-60px]"}`}>
     <div className={`md:w-[80%] sm:w-[95%] w-[500px] gap-[15px] flex flex-col`}>
       <div className="flex items-center gap-[15px]">
       <input type="text" placeholder={'Search'} className="text-[15px] fontcl main-f inp" />
