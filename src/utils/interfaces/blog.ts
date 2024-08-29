@@ -2,7 +2,7 @@ export interface BLOG {
     title : string,
     poster : string,
     rating : string,
-    isOnline : boolean,
+    isOnline : boolean | null,
     category : string,
     // size : string,
     // overview : string,

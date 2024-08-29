@@ -64,6 +64,7 @@ body {  scroll-behavior: smooth; padding: 0px; margin: 0; background-color: var(
 
 .bs {border:solid 1.5px var(--sec);}
 .bt {border:solid 1.5px var(--ter);}
+.bf {border : solid 1.5px var(--fourth)}
 .bbs {border: solid 3px var(--sec)}
 .bbt {border:solid 3px var(--ter);}
 .sbc {border-color: var(--sec);}

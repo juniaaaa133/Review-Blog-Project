@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { FiMenu } from "react-icons/fi";
 import { RxCross1 } from "react-icons/rx";
 import { Link, NavLink } from 'react-router-dom';
+import { CiSearch } from "react-icons/ci";
+import { TbSearchOff } from "react-icons/tb";
 import './index.css'
 
 const Nav = () => {
@@ -9,11 +11,12 @@ const Nav = () => {
   const [isOpened,setIsOpened] = useState<boolean>(false);
   const [isOpenedPfp,setIsOpenedPfp] = useState<boolean>(false);
   const [dummyUserAuth,setDummyUserAuth] = useState<boolean>(true);
+  const [isOpenedSearchBar,setIsOpenedSearchBar] = useState<boolean>(false);
   const text = "example@gmail.com";
 
   return (
  <>
-    <div className={`sticky z-[7] top-0 flex justify-between items-center w-full h-fit py-[10px] px-[40px] bg-white shadow-md`}>
+    <div className={`sticky z-[7] top-0 flex justify-between items-center w-full h-[55px] py-[10px] px-[40px] bg-white shadow-md`}>
       <div className="flex items-center justify-between gap-[15px]">
         <p onClick={()=>setIsOpened(true)} className="MD:hidden text-[20px] bcu"><FiMenu/></p>
         <h2 className='fontcl2 text-[20px] sys-f'>Mobocat</h2>
@@ -21,10 +24,39 @@ const Nav = () => {
   <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
         <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
         <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
-
   </div>
       </div>
+      <div className="flex items-center gap-[20px]">
+    <div 
+    onClick={()=>setIsOpenedSearchBar(!isOpenedSearchBar)}
+    className="text-[20px] fontcl bcu">
+      {
+        isOpenedSearchBar ?
+        <TbSearchOff />
+        :
+        <CiSearch /> 
+      }
+    </div>
       <img onClick={()=>setIsOpenedPfp(!isOpenedPfp)} src={'/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
+      </div>
+    </div>
+    <div  className={`fixed w-full flex trans  flex-col items-center h-fit bg-[#ffffff] p-[10px] ${isOpenedSearchBar ? 'top-[55px]' : "top-[-60px]"}`}>
+    <div className={`md:w-[80%] sm:w-[95%] w-[500px] gap-[15px] flex flex-col`}>
+      <div className="flex items-center gap-[15px]">
+      <input type="text" placeholder={'Search'} className="text-[15px] fontcl main-f inp" />
+      <div className="text-[12px] bcu">
+        <RxCross1 />
+      </div>
+      </div>
+    <div className="shadow-md w-full bg-[#fffcfc] flex flex-col gap-[8px] h-fit">
+      {/* <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link>
+      <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link>
+      <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link>
+      <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link>
+      <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link> */}
+
+    </div>
+    </div>
     </div>
 
     <div className={`${isOpenedPfp ? 'flex' : 'hidden'} shadow-lg fixed z-[8] flex-col gap-[20px] right-[40px] top-[50px] w-[250px] h-fit p-[20px] bg-white`}>
