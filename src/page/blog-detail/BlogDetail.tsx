@@ -41,28 +41,28 @@ Mauris quis maximus felis. Mauris tempor ipsum vel mauris rhoncus porta. Donec s
         </pre>
         </div>
         <div className="flex flex-col w-full gap-[60px]">
-          <div className="flex w-full justify-between items-center">
-          <div className="flex gap-[15px] items-center">
+          <div className="flex w-full justify-between sm:flex-col gap-[30px] min:items-center">
+          <div className="flex gap-[15px]">
           <img src="https://i.pinimg.com/236x/69/6c/c1/696cc1d1d134040dd2563328d7b6e5a3.jpg" alt="" className="w-[50px] h-[50px] rounded-[5px] pic" />
           <div className="flex flex-col gap-[1px]">
-          <p className="fontcl main-f text-[18px] font-[600]">Subway Surfers</p>
+          <p className="fontcl main-f md:text-[16px] text-[18px] font-[600]">Subway Surfers</p>
           <div className="flex fontcl3 main-f text-[13px] gap-[12px]">
            <p>Adventure</p>
            <p>Arcade</p>
-               </div>      
+               </div> 
               </div>
           </div>
-          <div className="btn1 bcu trans">
-          <div className="flex bcu main-f py-[3px] items-center gap-[5px]">
+          <div className="btn1 sm:w-full w-fit bcu trans">
+          <div  className="flex w-full justify-center main-f py-[3px] items-center gap-[5px]">
             <div className="  main-f text-[20px]">
               <PiDownloadSimple />
             </div>
             <p className="text-[15px]">Go to download</p>
+          </div >
           </div>
           </div>
-          </div>
-          <div className="flex w-full justify-between items-center">
-            <div className="flex main-f flex-col items-center justify-center">
+          <div className="md:hidden flex w-full justify-between items-center">
+            <div className=" flex main-f flex-col items-center justify-center">
             <div className="flex items-center text-[16px] font-[600] main-f ftoncl gap-[5px]">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-3">
   <path fillRule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clipRule="evenodd" />
@@ -73,22 +73,59 @@ Mauris quis maximus felis. Mauris tempor ipsum vel mauris rhoncus porta. Donec s
             </div>
 
             <div className="w-[.5px] h-[45px] bg-[#d2d2d2]"></div>
-            <div className="flex main-f flex-col items-center justify-center">
+            <div className=" flex main-f flex-col items-center justify-center">
             <h2 className="fontcl text-[16px] font-[600]">Offline</h2>
             <p className="fontcl3 text-[12px]">Status</p>
             </div>
-
-            <div className="w-[.5px] h-[45px] bg-[#d2d2d2]"></div>
-            <div className="flex main-f flex-col items-center justify-center">
+    <div className="w-[.5px] h-[45px] sm:hidden bg-[#d2d2d2]"></div>
+            <div className=" flex main-f flex-col items-center justify-center">
             <h2 className="fontcl text-[16px] font-[600]">155mb</h2>
             <p className="fontcl3 text-[12px]">Rating</p>
             </div>
 
             <div className="w-[.5px] h-[45px] bg-[#d2d2d2]"></div>
-            <div className="flex main-f flex-col items-center justify-center">
+            <div className=" flex main-f flex-col items-center justify-center">
             <h2 className="fontcl text-[16px] font-[600]">30 May,2020</h2>
             <p className="fontcl3 text-[12px]">Released on</p>
             </div>
+            
+          </div>
+{
+//mb
+}
+          <div className="MD:hidden flex gap-[20px] w-full flex-wrap justify-between items-center">
+            <div className="prt bg-red-0 flex justify-evenly items-center w-full">
+            <div className=" flex main-f flex-col items-center justify-center">
+            <div className="flex items-center text-[16px] font-[600] main-f ftoncl gap-[5px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-3">
+  <path fillRule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clipRule="evenodd" />
+</svg>
+                <div>3.7</div>
+            </div>
+            <p className="fontcl3 text-[12px]">Rating</p>
+            </div>
+
+            <div className="w-[.5px] h-[45px] bg-[#d2d2d2]"></div>
+            <div className=" flex main-f flex-col items-center justify-center">
+            <h2 className="fontcl text-[16px] font-[600]">Offline</h2>
+            <p className="fontcl3 text-[12px]">Status</p>
+            </div>
+            </div>
+            <div className="prt bg-red-0 flex justify-evenly items-center w-full">
+            <div className=" flex main-f flex-col items-center justify-center">
+            <h2 className="fontcl text-[16px] font-[600]">155mb</h2>
+            <p className="fontcl3 text-[12px]">Rating</p>
+            </div>
+
+            <div className="w-[.5px] h-[45px] bg-[#d2d2d2]"></div>
+            <div className=" flex main-f flex-col items-center justify-center">
+            <h2 className="fontcl text-[16px] font-[600]">30 May,2020</h2>
+            <p className="fontcl3 text-[12px]">Released on</p>
+            </div>
+            </div>
+           
+            
+            
           </div>
         </div>
     </div>
@@ -96,3 +133,37 @@ Mauris quis maximus felis. Mauris tempor ipsum vel mauris rhoncus porta. Donec s
 }
 
 export default BlogDetail
+
+{/* <div className="flex w-full flex-wrap justify-between items-center">
+            <div className="flex w-[50%]  items-center justify-between">
+            <div className="w-[49%] flex main-f flex-col items-center justify-center">
+            <div className="flex items-center text-[16px] font-[600] main-f ftoncl gap-[5px]">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="size-3">
+  <path fillRule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clipRule="evenodd" />
+</svg>
+                <div>3.7</div>
+            </div>
+            <p className="fontcl3 text-[12px]">Rating</p>
+            </div>
+
+            <div className="w-[.5px] h-[45px] bg-[#d2d2d2]"></div>
+            <div className="w-[49%] flex main-f flex-col items-center justify-center">
+            <h2 className="fontcl text-[16px] font-[600]">Offline</h2>
+            <p className="fontcl3 text-[12px]">Status</p>
+            </div>
+            </div>
+    <div className="flex w-[50%]  items-center justify-between">
+    <div className="w-[.5px] h-[45px] sm:hidden bg-[#d2d2d2]"></div>
+            <div className="w-[49%] flex main-f flex-col items-center justify-center">
+            <h2 className="fontcl text-[16px] font-[600]">155mb</h2>
+            <p className="fontcl3 text-[12px]">Rating</p>
+            </div>
+
+            <div className="w-[.5px] h-[45px] bg-[#d2d2d2]"></div>
+            <div className="w-[49%] flex main-f flex-col items-center justify-center">
+            <h2 className="fontcl text-[16px] font-[600]">30 May,2020</h2>
+            <p className="fontcl3 text-[12px]">Released on</p>
+            </div>
+    </div>
+            
+          </div> */}
