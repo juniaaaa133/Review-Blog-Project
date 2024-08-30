@@ -132,6 +132,7 @@ body {  scroll-behavior: smooth; padding: 0px; margin: 0; background-color: var(
     top:0;
     background-color: var(--main);
 }
+.twrap {text-wrap: wrap;}
 .mega-trans {transition: all; transition-duration: .5s;}
 .trans {transition: all; transition-duration: .3s;}
 .displaymb {
