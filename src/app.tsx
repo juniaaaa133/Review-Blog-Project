@@ -5,6 +5,7 @@ import Home from "./page/home/Home";
 import AuthFormPage from "./page/auth-form/AuthFormPage";
 import CategoryPage from "./page/categoryPage/CategoryPage";
 import FIlteredPage from "./page/filteredPage/FIlteredPage";
+import BlogDetail from "./page/blog-detail/BlogDetail";
 
 export function App() {
 
@@ -16,6 +17,10 @@ export function App() {
         {
           index : true,
           element : <Home />,
+        },
+        {
+          path: "/:id",
+          element : <BlogDetail />
         },
         {
           path : "/categories",

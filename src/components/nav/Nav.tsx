@@ -23,7 +23,6 @@ const Nav = () => {
   <div className="flex ml-[30px] items-center gap-[20px]">
   <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
         <NavLink to={'/categories'} className={`md:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
-        <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
   </div>
       </div>
       <div className="flex items-center gap-[20px]">
@@ -88,10 +87,9 @@ const Nav = () => {
         <p onClick={()=>setIsOpened(false)} className="text-[20px] bcu"><RxCross1/></p>
         <h2 className='fontcl2 text-[20px] sys-f'>Mobocat</h2>
       </div>
-      <div className="flex flex-col gap-[10px]">
-  <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
+      <div className="flex flex-col gap-[10px] mt-[10px]">
+  <NavLink to={'/'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
         <NavLink to={'/categories'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
-        <NavLink to={'/'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
       </div>
     </div>
  </>

@@ -1,5 +1,6 @@
 import React from 'react'
 import './index.css'
+import { Link } from 'react-router-dom'
 
 const Blog = ({
   title,
@@ -15,7 +16,7 @@ const Blog = ({
   isOnline : boolean | null
 }) => {
   return (
-    <div className='bl-main bcu shadow-lg'>
+    <Link to={`/${'king-of-thieves'}`} className='bl-main bcu shadow-lg'>
         <img src={poster} alt="" className=" trans pic bl-img" />
         <div className="bl-layout"></div>
         <div className="bl-info">
@@ -31,7 +32,7 @@ const Blog = ({
             </div>
             </div>
         </div>
-    </div>
+    </Link>
   )
 }
 
