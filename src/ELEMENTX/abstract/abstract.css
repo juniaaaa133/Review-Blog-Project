@@ -21,7 +21,7 @@ body {  scroll-behavior: smooth; padding: 0px; margin: 0; background-color: var(
 :root { 
     --main : #fefffa;
     --mainD : #f2f2f2;
-    --sec : #1ab7fbfc;
+    --sec : #05acf4fc;
     --ter : #d7b52e;
     --fourth : #d85b3c;
     --original : #f4f4f4;    
@@ -151,7 +151,7 @@ body {  scroll-behavior: smooth; padding: 0px; margin: 0; background-color: var(
     font-weight: 400;
     border-radius: 30px;
     height: fit-content;
-    padding: 2px 20px;
+    padding: 3px 20px;
     background-color: var(--sec);
     border: 1px solid var(--sec);
     color : var(--fclD);
