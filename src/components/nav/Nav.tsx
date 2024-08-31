@@ -4,6 +4,8 @@ import { RxCross1 } from "react-icons/rx";
 import { Link, NavLink } from 'react-router-dom';
 import { CiSearch } from "react-icons/ci";
 import { TbSearchOff } from "react-icons/tb";
+import { IoShieldCheckmark } from "react-icons/io5";
+
 import './index.css'
 
 const Nav = () => {
@@ -13,6 +15,7 @@ const Nav = () => {
   const [dummyUserAuth,setDummyUserAuth] = useState<boolean>(true);
   const [isOpenedSearchBar,setIsOpenedSearchBar] = useState<boolean>(false);
   const text = "example@gmail.com";
+  let userStatus = 'admin';
 
   return (
  <>
@@ -23,7 +26,11 @@ const Nav = () => {
   <div className="flex ml-[30px] items-center gap-[20px]">
   <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
         <NavLink to={'/categories'} className={`md:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
+        <NavLink to={'/admin/products'} className={`md:hidden fontcl2H text-[15px] main-f`} > Products</NavLink>
+        <NavLink to={'/admin/users'} className={`md:hidden fontcl2H text-[15px] main-f`} > Users</NavLink>
+
   </div>
+
       </div>
       <div className="flex items-center gap-[20px]">
     <div 
@@ -36,7 +43,17 @@ const Nav = () => {
         <CiSearch /> 
       }
     </div>
+    {
+      userStatus == 'admin' ?
+      <div onClick={()=>setIsOpenedPfp(!isOpenedPfp)} className="relative w-fit h-fit">
+              <img  src={'/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
+      <div className="absolute bottom-[-5px] right-[-4px] w-fit h-fit text-[14px] fontcl4 rotate-[0deg]">
+        < IoShieldCheckmark />
+      </div>
+      </div>
+      :
       <img onClick={()=>setIsOpenedPfp(!isOpenedPfp)} src={'/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
+    }
       </div>
     </div>
     <div  className={`fixed z-[5] w-full flex trans  flex-col items-center h-fit bg-[#ffffff] p-[10px] ${isOpenedSearchBar ? 'top-[55px]' : "top-[-60px]"}`}>
@@ -58,12 +75,22 @@ const Nav = () => {
     </div>
     </div>
 
-    <div className={`${isOpenedPfp ? 'flex' : 'hidden'} shadow-lg fixed z-[8] flex-col gap-[20px] right-[40px] top-[50px] w-[250px] h-fit p-[20px] bg-white`}>
+    <div className={`${isOpenedPfp ? 'flex' : 'hidden'} shadow-lg fixed z-[8] flex-col gap-[20px] right-[40px] top-[50px] w-[270px] h-fit p-[20px] bg-white`}>
       <h2 className="main-f fontcl3 text-[15px]">Profile Setting</h2>
    {
     dummyUserAuth ?
     <div className="flex gap-[10px]">
-      <img src="https://i.pinimg.com/736x/a0/4d/4e/a04d4ee826a4e4096841ebf18f0d5e7a.jpg" alt="" className="rounded-full w-[50px] h-[50px] pic" />
+      {
+        userStatus == 'admin' ?
+        <div onClick={()=>setIsOpenedPfp(!isOpenedPfp)} className="relative w-fit h-fit">
+<img src="https://i.pinimg.com/736x/a0/4d/4e/a04d4ee826a4e4096841ebf18f0d5e7a.jpg" alt="" className="rounded-full border-blue-400 border-[1px] w-[50px] h-[50px] pic" />
+<div className="absolute bottom-[-4px] right-[-2px] w-fit h-fit text-[16px] fontcl4 rotate-[0deg]">
+  < IoShieldCheckmark />
+</div>
+</div>
+:
+<img src="https://i.pinimg.com/736x/a0/4d/4e/a04d4ee826a4e4096841ebf18f0d5e7a.jpg" alt="" className="rounded-full w-[50px] h-[50px] pic" />
+      }
       <div className="flex flex-col gap-[2px] main-f ">
         <p className="fontcl text-[14px]">Rein Ogga Myo</p>
         <p className="fontcl3 text-[13px]">{text.length > 20 ? text.substring(0,20) + '...' : text }</p>
@@ -74,6 +101,7 @@ const Nav = () => {
     <div className="flex flex-col gap-[15px]">
     <Link className='main-f btn1 text-[15px] text-center trans' to='/login'>Login </Link>
       <Link className='main-f btn2 text-[15px] text-center trans' to='/sign-up'>Create new account</Link>
+      
     </div>
    }
     </div>
@@ -90,6 +118,8 @@ const Nav = () => {
       <div className="flex flex-col gap-[10px] mt-[10px]">
   <NavLink to={'/'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
         <NavLink to={'/categories'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
+        <NavLink to={'/admin/products'} className={`md:hidden fontcl2H text-[15px] main-f`} > Products</NavLink>
+        <NavLink to={'/admin/users'} className={`md:hidden fontcl2H text-[15px] main-f`} > Users</NavLink>
       </div>
     </div>
  </>

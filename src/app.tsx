@@ -6,6 +6,8 @@ import AuthFormPage from "./page/auth-form/AuthFormPage";
 import CategoryPage from "./page/categoryPage/CategoryPage";
 import FIlteredPage from "./page/filteredPage/FIlteredPage";
 import BlogDetail from "./page/blog-detail/BlogDetail";
+import ProductPage from "./page/admin/products/ProductPage";
+import UserPage from "./page/admin/users/UserPage";
 
 export function App() {
 
@@ -37,7 +39,20 @@ export function App() {
         {
           path : "/sign-up",
           element : <AuthFormPage login={false} />
-        }
+        },
+        {
+          path : "/admin",
+          children : [
+            {
+              path : "/admin/products",
+              element : <ProductPage />,
+            },
+            {
+              path : "/admin/users",
+              element : <UserPage />,
+            },
+          ]
+        },
       ]
 
     }
