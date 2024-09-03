@@ -192,7 +192,7 @@ body {  scroll-behavior: smooth; padding: 0px; margin: 0; background-color: var(
     background-color:inherit;
     padding: 4px 12px;
     outline: inherit;
-    border:1.8px solid var(--sec);
+    border:1.5px solid var(--sec);
     border-radius: 5px;
     outline-offset: inherit;
     color : var(--fcl)

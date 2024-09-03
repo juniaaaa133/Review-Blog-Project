@@ -6,8 +6,8 @@ import AuthFormPage from "./page/auth-form/AuthFormPage";
 import CategoryPage from "./page/categoryPage/CategoryPage";
 import FIlteredPage from "./page/filteredPage/FIlteredPage";
 import BlogDetail from "./page/blog-detail/BlogDetail";
-import ProductPage from "./page/admin/products/ProductPage";
 import UserPage from "./page/admin/users/UserPage";
+import CreateBlogPage from "./page/admin/products/CreateBlogPage";
 
 export function App() {
 
@@ -44,8 +44,8 @@ export function App() {
           path : "/admin",
           children : [
             {
-              path : "/admin/products",
-              element : <ProductPage />,
+              path : "/admin/create-blog",
+              element : <CreateBlogPage />,
             },
             {
               path : "/admin/users",

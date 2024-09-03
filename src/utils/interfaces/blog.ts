@@ -10,3 +10,11 @@ export interface BLOG {
     // url : string,
     // releaseDate : string,
 }
+
+export interface BLOGFORM {
+    title : string,
+    overview : string,
+    url : string,
+    size : string,
+    releasedDate : string,
+}

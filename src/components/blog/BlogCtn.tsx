@@ -1,6 +1,7 @@
 import React from 'react'
 import Blog from './Blog'
 import { BLOG } from '../../utils/interfaces/blog'
+import BlogButton from './BlogButton'
 
 const BlogCtn = ({
     blogs
@@ -10,6 +11,7 @@ const BlogCtn = ({
 ) => {
   return (
     <div className='bl-ctn justify-center mx-auto gap-[10px] px-[20px] items-center'>
+      <BlogButton />
       {
         blogs.map((blog,index)=>(
           <Blog 

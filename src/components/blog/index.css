@@ -4,7 +4,6 @@ height: 160px;
 border-radius: 5px;
 overflow: hidden;
 position: relative;
-background-color: #f1d5e4;
 }
 .bl-main:hover .bl-img {
     height: 108%;
