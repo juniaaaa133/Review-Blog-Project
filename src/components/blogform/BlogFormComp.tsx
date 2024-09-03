@@ -5,6 +5,7 @@ import { SetFieldValue } from '../../utils/interfaces/formik';
 import { TbPhotoEdit } from 'react-icons/tb';
 import { RiImageAddLine } from 'react-icons/ri';
 import { BLOGFORM } from '../../utils/interfaces/blog';
+import './index.css'
 
 interface BlogProps extends BLOGFORM {
   create? : boolean
@@ -18,25 +19,37 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
         setFieldValue
       } = props;
 
-      let [selectedImage,setSelectedImage] = useState<string | null>('');
-      let imageFileInput = useRef<HTMLInputElement | null>(null);
+      let [selectedBackdropImage,setSelectedBackdropImage] = useState<string | null>(null);
+      let [selectedIconImage,setSelectedIconImage] = useState<string | null>(null);
+      let backdropImage = useRef<HTMLInputElement | null>(null);
+      let iconImage = useRef<HTMLInputElement | null>(null);
 
       let showImage = (e : ChangeEvent<HTMLInputElement>,setFieldValue : SetFieldValue) => {
     if(e.currentTarget.files){
       let img = e.currentTarget.files[0]
       let imageUrl = URL.createObjectURL(img)
-      setSelectedImage(imageUrl)
+    if(!selectedBackdropImage){
+      setSelectedBackdropImage(imageUrl)
       setFieldValue('coverImage',img)
+    }
+    if(!selectedIconImage){
+      console.log('fk')
+      setSelectedIconImage(imageUrl)
+      setFieldValue('iconImage',img)
+    }
+      console.log(e.currentTarget.files)
     }
         }
         
       let removeShownImage = (setFieldValue : SetFieldValue) => {
-            setSelectedImage(null);
+            setSelectedBackdropImage(null);
+            setSelectedIconImage(null);
             setFieldValue('coverImage',null);
-           if( imageFileInput.current)
-            imageFileInput.current.value == null
+           if( backdropImage.current)
+            backdropImage.current.value == null
+           if( iconImage.current)
+            iconImage.current.value == null
         }
-    
 
     return (
       
@@ -71,17 +84,37 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
        </Field>
         </div>
         <div className="flex flex-col gap-[5px] w-full main-f">
-        <input onChange={(e)=>showImage(e,setFieldValue)} type="file" ref={imageFileInput} hidden id='image' name='image' className='fontcl text-[16px] main-f w-full'/ >
+        <label className='text-[15px] fontcl main-f' htmlFor="icon">Add icon picture</label>
+        <input multiple onChange={(e)=>showImage(e,setFieldValue)} type="file" ref={iconImage} hidden id='icon' name='icon' className='fontcl text-[16px] main-f w-full'/ >
                       {
-                          selectedImage ?
-                          <div onClick={()=>imageFileInput.current?.click()} className="file-img-ctn bcu">
+                          selectedIconImage ?
+                          <div onClick={()=>iconImage.current?.click()} className="w-[80px] h-[80px] relative rounded-[10px] bcu">
+                              <div className='text-[16px] z-[2] text-white absolute top-0 left-0 right-0 bottom-0 m-auto w-fit h-fit'>
+                                <TbPhotoEdit />
+                              </div>
+                              <img src={selectedIconImage} alt="" className='backdrop rounded-[10px] w-[80px] h-[80px] pic'/>
+                          </div>
+                          :
+                          <div type='button' onClick={()=>iconImage.current?.click()} className="relative bcu w-[80px] h-[80px] rounded-[10px] bg-[#eee]">
+                      <div className='text-[16px] fontcl3 absolute top-0 left-0 right-0 bottom-0 m-auto w-fit h-fit'>
+                        <RiImageAddLine />
+                      </div>
+                      </div>
+                      }
+             </div>
+        <div className="flex flex-col gap-[5px] w-full main-f">
+        <label className='text-[15px] fontcl main-f' htmlFor="backdrop">Add backdrop picture</label>
+        <input multiple onChange={(e)=>showImage(e,setFieldValue)} type="file" ref={backdropImage} hidden id='backdrop' name='backdrop' className='fontcl text-[16px] main-f w-full'/ >
+                      {
+                          selectedBackdropImage ?
+                          <div onClick={()=>backdropImage.current?.click()} className="w-full h-[200px] relative rounded-[10px] bcu">
                               <div className='text-[36px] z-[2] text-white absolute top-0 left-0 right-0 bottom-0 m-auto w-fit h-fit'>
                                 <TbPhotoEdit />
                               </div>
-                              <img src={selectedImage} alt="" className='file-img pic'/>
+                              <img src={selectedBackdropImage} alt="" className='backdrop rounded-[10px] w-full h-[200px] pic'/>
                           </div>
                           :
-                          <div type='button' onClick={()=>imageFileInput.current?.click()} className="relative bcu file-main">
+                          <div type='button' onClick={()=>backdropImage.current?.click()} className="relative bcu w-full h-[200px] rounded-[10px] bg-[#eee]">
                       <div className='text-[36px] fontcl3 absolute top-0 left-0 right-0 bottom-0 m-auto w-fit h-fit'>
                         <RiImageAddLine />
                       </div>
