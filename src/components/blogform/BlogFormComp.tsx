@@ -5,6 +5,7 @@ import { SetFieldValue } from '../../utils/interfaces/formik';
 import { TbPhotoEdit } from 'react-icons/tb';
 import { RiImageAddLine } from 'react-icons/ri';
 import { BLOGFORM } from '../../utils/interfaces/blog';
+import { IoIosRemoveCircleOutline } from "react-icons/io";
 import './index.css'
 
 interface BlogProps extends BLOGFORM {
@@ -24,31 +25,41 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
       let backdropImage = useRef<HTMLInputElement | null>(null);
       let iconImage = useRef<HTMLInputElement | null>(null);
 
-      let showImage = (e : ChangeEvent<HTMLInputElement>,setFieldValue : SetFieldValue) => {
+      let showImage = (type : string,e : ChangeEvent<HTMLInputElement>,setFieldValue : SetFieldValue) => {
     if(e.currentTarget.files){
-      let img = e.currentTarget.files[0]
-      let imageUrl = URL.createObjectURL(img)
-    if(!selectedBackdropImage){
+    if(!selectedBackdropImage && type === 'backdrop'){
+      let backdropImg = e.currentTarget.files[0]
+      let imageUrl = URL.createObjectURL(backdropImg)
       setSelectedBackdropImage(imageUrl)
-      setFieldValue('coverImage',img)
+      setFieldValue('coverImage',backdropImage)
     }
-    if(!selectedIconImage){
-      console.log('fk')
+    if(!selectedIconImage && type == 'icon'){
+      let iconImg = e.currentTarget.files[0]
+      let imageUrl = URL.createObjectURL(iconImg)
       setSelectedIconImage(imageUrl)
-      setFieldValue('iconImage',img)
+      setFieldValue('iconImage',iconImg)
     }
       console.log(e.currentTarget.files)
     }
         }
         
-      let removeShownImage = (setFieldValue : SetFieldValue) => {
-            setSelectedBackdropImage(null);
+      let removeShownImage = (type:string) => {
+        switch (type) {
+          case 'icon':
             setSelectedIconImage(null);
-            setFieldValue('coverImage',null);
-           if( backdropImage.current)
+            if( iconImage.current)
+              iconImage.current.value == null
+            break;
+
+          default:
+          setSelectedBackdropImage(null);
+          if( backdropImage.current)
             backdropImage.current.value == null
-           if( iconImage.current)
-            iconImage.current.value == null
+            break;
+        }
+            // setFieldValue('coverImage',null);
+           
+           
         }
 
     return (
@@ -84,8 +95,16 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
        </Field>
         </div>
         <div className="flex flex-col gap-[5px] w-full main-f">
-        <label className='text-[15px] fontcl main-f' htmlFor="icon">Add icon picture</label>
-        <input multiple onChange={(e)=>showImage(e,setFieldValue)} type="file" ref={iconImage} hidden id='icon' name='icon' className='fontcl text-[16px] main-f w-full'/ >
+      <div className="flex items-center gap-[10px]">
+      <label className='text-[15px] fontcl main-f' htmlFor="icon">Add icon picture</label>
+      {
+        selectedIconImage &&
+        <div onClick={()=>removeShownImage('icon')} className='bcu text-red-600 text-[16px]'>
+<IoIosRemoveCircleOutline />
+      </div>
+      }
+      </div>
+        <input multiple onChange={(e)=>showImage('icon',e,setFieldValue)} type="file" ref={iconImage} hidden id='icon' name='icon' className='fontcl text-[16px] main-f w-full'/ >
                       {
                           selectedIconImage ?
                           <div onClick={()=>iconImage.current?.click()} className="w-[80px] h-[80px] relative rounded-[10px] bcu">
@@ -103,8 +122,16 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
                       }
              </div>
         <div className="flex flex-col gap-[5px] w-full main-f">
-        <label className='text-[15px] fontcl main-f' htmlFor="backdrop">Add backdrop picture</label>
-        <input multiple onChange={(e)=>showImage(e,setFieldValue)} type="file" ref={backdropImage} hidden id='backdrop' name='backdrop' className='fontcl text-[16px] main-f w-full'/ >
+        <div className="flex items-center gap-[10px]">
+      <label className='text-[15px] fontcl main-f' htmlFor="icon">Add backdrop picture</label>
+      {
+        selectedBackdropImage &&
+        <div onClick={()=>removeShownImage('backdrop')} className='bcu text-red-600 text-[16px]'>
+<IoIosRemoveCircleOutline />
+      </div>
+      }
+      </div>
+              <input multiple onChange={(e)=>showImage('backdrop',e,setFieldValue)} type="file" ref={backdropImage} hidden id='backdrop' name='backdrop' className='fontcl text-[16px] main-f w-full'/ >
                       {
                           selectedBackdropImage ?
                           <div onClick={()=>backdropImage.current?.click()} className="w-full h-[200px] relative rounded-[10px] bcu">
