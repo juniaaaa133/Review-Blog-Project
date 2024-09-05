@@ -8,6 +8,7 @@ import FIlteredPage from "./page/filteredPage/FIlteredPage";
 import BlogDetail from "./page/blog-detail/BlogDetail";
 import UserPage from "./page/admin/users/UserPage";
 import CreateBlogPage from "./page/admin/products/CreateBlogPage";
+import UserDetail from "./page/admin/user-detail/UserDetail";
 
 export function App() {
 
@@ -50,6 +51,10 @@ export function App() {
             {
               path : "/admin/users",
               element : <UserPage />,
+            },
+            {
+              path : "/admin/users/:id",
+              element : <UserDetail />,
             },
           ]
         },
