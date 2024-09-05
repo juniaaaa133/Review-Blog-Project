@@ -163,6 +163,18 @@ body {  scroll-behavior: smooth; padding: 0px; margin: 0; background-color: var(
     background-color: inherit;
     color : var(--fcl);
 }
+.btn-warn {
+    font-size: 15px;
+    font-weight: 400;
+    border-radius: 30px;
+    height: fit-content;
+    padding: 3px 20px;
+    background-color: #ff3232;
+    color : var(--fclD);
+}
+.btn-warn:hover {
+    background-color: #d32424;
+}
 
 .btn2 {
     font-size: 15px;

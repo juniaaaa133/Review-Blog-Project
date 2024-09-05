@@ -2,10 +2,16 @@ import React from 'react'
 import './index.css'
 import { IoCopyOutline } from "react-icons/io5";
 import { PiDownloadSimple } from "react-icons/pi";
+import { Link } from 'react-router-dom';
 
 const BlogDetail = () => {
   return (
     <div className={'lg:w-[500px] md:w-[90%] w-[700px] mx-auto mt-[20px] flex flex-col gap-[60px]'}>
+      <div className="w-full flex flex-warp items-center justify-start gap-[10px]">
+        <Link to='/' className='w-[120px] trans font-[600] btn2 main-f text-[15px] text-center'>Edit Post</Link>
+        <button className='w-[120px] trans font-[600] btn-warn main-f text-[15px]'>Delete Post</button>
+
+      </div>
         <div className="flex items-center md:gap-[15px] gap-[20px] ">
             <img src="https://i.pinimg.com/236x/69/6c/c1/696cc1d1d134040dd2563328d7b6e5a3.jpg" alt="" className=" md:w-[45px] md:h-[45px] w-[60px] h-[60px] rounded-[5px] pic" />
             

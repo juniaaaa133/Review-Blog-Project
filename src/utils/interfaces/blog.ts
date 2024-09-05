@@ -12,9 +12,9 @@ export interface BLOG {
 }
 
 export interface BLOGFORM {
-    title : string,
-    overview : string,
-    url : string,
-    size : string,
-    releasedDate : string,
+    title? : string,
+    overview? : string,
+    url? : string,
+    size? : string,
+    releasedDate? : string,
 }
