@@ -209,6 +209,15 @@ body {  scroll-behavior: smooth; padding: 0px; margin: 0; background-color: var(
     outline-offset: inherit;
     color : var(--fcl)
 }
+.inp-re {
+    width: 100%;
+    background-color:#dce8edfc;
+    padding: 4px 12px;
+    outline: inherit;
+    border-radius: 5px;
+    outline-offset: inherit;
+    color : var(--fcl)
+}
 .ta-inp {
     color : var(--fcl);
     font-weight: 600;
