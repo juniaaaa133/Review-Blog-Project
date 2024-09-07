@@ -54,7 +54,11 @@ export function App() {
             },
             {
               path : "/admin/users/:id",
-              element : <UserDetail />,
+              element : <UserDetail create={false}/>,
+            },
+            {
+              path : "/admin/add-user",
+              element : <UserDetail create={true}/>,
             },
           ]
         },
