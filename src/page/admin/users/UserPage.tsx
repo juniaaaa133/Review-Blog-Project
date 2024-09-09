@@ -2,6 +2,7 @@ import React from 'react'
 import UserTable from '../../../components/user/UserTable'
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { Link } from 'react-router-dom'
+import Pagination from '../../../components/pagination/Pagination';
 
 const UserPage = () => {
   return (
@@ -12,6 +13,8 @@ const UserPage = () => {
   <AiOutlineUserAdd/>
       </Link>
       <UserTable />
+      <Pagination />
+
     </div>
   )
 }
