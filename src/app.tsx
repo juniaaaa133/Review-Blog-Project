@@ -34,6 +34,10 @@ export function App() {
           element : <FIlteredPage />
         },
         {
+          path : "/my-account/:id",
+          element : <UserDetail create={false} authAccount="admin@gmail.com"/>,
+        },
+        {
           path : "/login",
           element : <AuthFormPage login={true} />
         },
@@ -54,11 +58,11 @@ export function App() {
             },
             {
               path : "/admin/users/:id",
-              element : <UserDetail create={false}/>,
+              element : <UserDetail create={false} authAccount=""/>,
             },
             {
               path : "/admin/add-user",
-              element : <UserDetail create={true}/>,
+              element : <UserDetail create={true} authAccount=""/>,
             },
           ]
         },

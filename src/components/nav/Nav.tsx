@@ -93,7 +93,7 @@ const Nav = () => {
       <div className="flex flex-col gap-[2px] main-f ">
         <p className="fontcl text-[14px]">Rein Ogga Myo</p>
         <p className="fontcl3 text-[13px]">{text.length > 20 ? text.substring(0,20) + '...' : text }</p>
-        <button className="btn2 text-[14px] main-f mt-[20px] trans">Manage accuont</button>
+        <Link onClick={()=>setIsOpenedPfp(false)} to={'/my-account/admin@gmail.com'} className="btn2 text-[14px] main-f mt-[20px] trans">Manage accuont</Link>
       </div>
     </div>
     :
