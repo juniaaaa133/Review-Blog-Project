@@ -8,6 +8,7 @@ import BlogFormComp from './BlogFormComp'
 
 interface BlogProps extends BLOGFORM {
   create? : boolean
+  categoryData? : string[]
 }
 
 const BlogForm = withFormik<BlogProps ,BLOGFORM >({
@@ -18,22 +19,24 @@ const BlogForm = withFormik<BlogProps ,BLOGFORM >({
       url :props.url || '',
       size :props.size || '',
        releasedDate :props.releasedDate || '',
+       categories : props.categoryData || []
     }
   },
-  validationSchema :  Yup.object().shape({
-    title : Yup.string()
-    .required('Title field must not be empty!'),
-    overview : Yup.string()
-    .required('Title field must not be empty!'),
-    url : Yup.string()
-    .required('Url field must not be empty!'),
-    size : Yup.string()
-    .required('Size field must not be empty!'),
-    releasedDate : Yup.string()
-    .required('Release date field must not be empty!'),
-  }),
-  handleSubmit : values => {
-    //
+  // validationSchema :  Yup.object().shape({
+  //   title : Yup.string()
+  //   .required('Title field must not be empty!'),
+  //   overview : Yup.string()
+  //   .required('Title field must not be empty!'),
+  //   url : Yup.string()
+  //   .required('Url field must not be empty!'),
+  //   size : Yup.string()
+  //   .required('Size field must not be empty!'),
+  //   releasedDate : Yup.string()
+  //   .required('Release date field must not be empty!'),
+  // }),
+  handleSubmit : (values) => {
+    console.log("HIIII")
+    console.log(values)
   }
 })(BlogFormComp)
 

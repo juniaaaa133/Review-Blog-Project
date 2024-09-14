@@ -1,4 +1,4 @@
-import { Field, FormikProps, FormikValues } from 'formik'
+import { Field, FormikProps, FormikProvider, FormikValues } from 'formik'
 import React, { ChangeEvent, useRef, useState } from 'react'
 import { Form } from 'react-router-dom'
 import { SetFieldValue } from '../../utils/interfaces/formik';
@@ -7,25 +7,32 @@ import { RiImageAddLine } from 'react-icons/ri';
 import { BLOGFORM } from '../../utils/interfaces/blog';
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import './index.css'
+import { categories } from '../../utils/data';
 
 interface BlogProps extends BLOGFORM {
-  create? : boolean
+  create? : boolean,
+  categoryData? : string[]
 }
 
 const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
 
       const {
         create,
+        categoryData,
         errors,
-        setFieldValue
+        setFieldValue,
+        handleSubmit
       } = props;
+
+      let [categoryArray,setCategoryArray] = useState<string[]>([])
+      let [categoryOption,setCategoryOption] = useState<string>('')
 
       let [selectedBackdropImage,setSelectedBackdropImage] = useState<string | null>(null);
       let [selectedIconImage,setSelectedIconImage] = useState<string | null>(null);
       let backdropImage = useRef<HTMLInputElement | null>(null);
       let iconImage = useRef<HTMLInputElement | null>(null);
 
-      let showImage = (type : string,e : ChangeEvent<HTMLInputElement>,setFieldValue : SetFieldValue) => {
+    let showImage = (type : string,e : ChangeEvent<HTMLInputElement>,setFieldValue : SetFieldValue) => {
     if(e.currentTarget.files){
     if(!selectedBackdropImage && type === 'backdrop'){
       let backdropImg = e.currentTarget.files[0]
@@ -43,7 +50,7 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
     }
         }
         
-      let removeShownImage = (type:string) => {
+    let removeShownImage = (type:string) => {
         switch (type) {
           case 'icon':
             setSelectedIconImage(null);
@@ -61,12 +68,22 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
            
            
         }
+      
+    let selectCategory = (event : ChangeEvent<HTMLSelectElement>) => {
+      console.log(event.currentTarget.value)
+      setCategoryOption(event.currentTarget.value)
+    }
+
+    let addCategory = (category: string) => {
+      console.log(category)
+      setCategoryArray(categoryArr =>[...categoryArr,category])
+    }
 
     return (
       
 <div className="absolute z-[9] top-0 w-full h-[100vh] bg-main">
 <div className="flex flex-col sm:w-[80%] w-[400px] mt-[60px] m-auto gap-[30px] justify-center h-fit ">
-<Form className='flex flex-col w-full gap-[10px]'>
+<Form onSubmit={handleSubmit} className='flex flex-col w-full gap-[10px]'>
         <p className="fontcl main-f text-[22px] w-[100%]">{create ? 'Post new blog' : 'Update blog' }</p>
         <div className="flex flex-col gap-[5px] w-full">
       <label className='text-[15px] fontcl main-f' htmlFor="title">Post Title</label>
@@ -85,6 +102,10 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
       <Field className="w-full inp main-f fontcl text-[15px] h-[41px]"  type='text' id='releasedDate' placeholder="Released date" name="releasedDate"/>
         </div>
         <div className="flex flex-col gap-[5px] w-full">
+      <label className='text-[15px] fontcl main-f' htmlFor="rating">Rating</label>
+      <Field className="w-full inp main-f fontcl text-[15px] h-[41px]"  type='text' id='rating'  placeholder="out of 5" name="rating"/>
+        </div>
+        <div className="flex flex-col gap-[5px] w-full">
       <label className='text-[15px] fontcl main-f' htmlFor="status">Set app's status</label>
       <Field
         className=" inp main-f fontcl text-[15px] bcu h-[41px]"
@@ -93,6 +114,32 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
          <option className={'bcu'} value="offline">Offline</option>
          <option className={'bcu'} value="any">Hybird</option>
        </Field>
+        </div>
+        <div className="flex flex-col gap-[5px] w-full">
+      <label className='text-[15px] fontcl main-f' htmlFor="categories">Manage Category</label>
+      <div className="flex items-center gap-[20px]">
+      <select
+        className=" inp main-f fontcl text-[15px] bcu h-[41px]"
+         name="categoryData"
+         onChange={(e)=>selectCategory(e)}
+         >
+      {
+        categories.map((category,idx) => (
+          <option key={idx} className={'bcu'} value={category.name}>{category.name}</option>
+        ))
+      }
+       </select>
+       <button type="button" onClick={()=>addCategory(categoryOption)} className="btn1 w-[70px] main-f text-[15px] trans">Save</button>
+      </div>
+        </div>
+        <div className="flex flex-warp items-center gap-[15px]">
+    {
+            categoryArray.length !== 0 &&
+            categoryArray.map((category,idx) => (
+              <div key={idx} className="bg-[#e2f7ff] rounded-[7px] text-[14px] main-f fpntcl w-fit h-fit px-[10px] py-[4px]">{category}</div>      
+            ))
+          }
+
         </div>
         <div className="flex flex-col gap-[5px] w-full main-f">
       <div className="flex items-center gap-[10px]">
@@ -152,7 +199,7 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
       <label className='text-[15px] fontcl main-f' htmlFor="overview">Overview</label>
       <Field as="textarea" className="w-full inp main-f fontcl text-[15px] h-[201px]"  type='text' id='overview' placeholder="Overview" name="overview"/>
         </div>
-        <button className="btn1 main-f text-[15px] trans">{create ? "Post Blog" : "Update Blog" }</button>
+        <button type='submit' className="btn1 main-f text-[15px] trans">{create ? "Post Blog" : "Update Blog" }</button>
       </Form>
 </div>
 </div>

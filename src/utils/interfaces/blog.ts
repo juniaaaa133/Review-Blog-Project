@@ -17,4 +17,5 @@ export interface BLOGFORM {
     url? : string,
     size? : string,
     releasedDate? : string,
+    categories? : string[]
 }
