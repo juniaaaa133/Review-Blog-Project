@@ -3,16 +3,18 @@ import './index.css'
 import { Field, Form, Formik, FormikProps, withFormik } from 'formik'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
-import { BLOGFORM } from '../../utils/interfaces/blog'
+import { BLOG, BLOGFORM } from '../../utils/interfaces/blog'
 import BlogFormComp from './BlogFormComp'
+import { categories } from '../../utils/data'
 
-interface BlogProps extends BLOGFORM {
+interface BlogProps extends BLOG {
   create? : boolean
   categoryData? : string[]
 }
 
-const BlogForm = withFormik<BlogProps ,BLOGFORM >({
+const BlogForm = withFormik<BlogProps ,BLOG >({
   mapPropsToValues : props => {
+    console.log(props.create , props.categoryData , "PROPS")
     return {
       title : props.title || '',
       overview :props.overview || '',
@@ -34,9 +36,33 @@ const BlogForm = withFormik<BlogProps ,BLOGFORM >({
   //   releasedDate : Yup.string()
   //   .required('Release date field must not be empty!'),
   // }),
-  handleSubmit : (values) => {
-    console.log("HIIII")
-    console.log(values)
+  handleSubmit : (values : BLOG) => {
+    let formData = new FormData;
+     
+    if(
+      values.title &&
+      values.overview &&
+      values.size &&
+      values.rating &&
+      values.releasedDate &&
+      values.categories &&
+      values.url &&
+      values.isOnline &&
+      values.backdrop &&
+      values.icon
+    ){
+ formData.append("title",values.title)
+ formData.append("overview",values.overview)
+ formData.append("size",values.size)
+ formData.append("rating",values.rating)
+ formData.append("releasedDate",values.releasedDate)
+ formData.append("url",values.url)
+ formData.append("categories",JSON.stringify(values.categories))
+ formData.append("isOnline",JSON.stringify(values.isOnline))
+ formData.append("backdrop",values.backdrop)
+ formData.append("icon",values.icon)
+    }
+
   }
 })(BlogFormComp)
 

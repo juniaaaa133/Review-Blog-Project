@@ -1,27 +1,28 @@
 import { Field, FormikProps, FormikProvider, FormikValues } from 'formik'
 import React, { ChangeEvent, useRef, useState } from 'react'
-import { Form } from 'react-router-dom'
 import { SetFieldValue } from '../../utils/interfaces/formik';
 import { TbPhotoEdit } from 'react-icons/tb';
 import { RiImageAddLine } from 'react-icons/ri';
-import { BLOGFORM } from '../../utils/interfaces/blog';
+import { BLOG, BLOGFORM } from '../../utils/interfaces/blog';
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import './index.css'
 import { categories } from '../../utils/data';
+import { DatePicker, DatePickerProps, Form, FormProps, Input,Select } from 'antd';
+import { Dayjs } from 'dayjs';
+import { Option } from 'antd/es/mentions';
 
-interface BlogProps extends BLOGFORM {
+interface BlogProps extends BLOG {
   create? : boolean,
   categoryData? : string[]
 }
 
-const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
+const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
 
       const {
         create,
         categoryData,
         errors,
         setFieldValue,
-        handleSubmit
       } = props;
 
       let [categoryArray,setCategoryArray] = useState<string[]>([])
@@ -32,89 +33,151 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
       let backdropImage = useRef<HTMLInputElement | null>(null);
       let iconImage = useRef<HTMLInputElement | null>(null);
 
+      let status = [
+        {
+        mode : 'false',
+        label : "Offline"
+      },
+      {
+        mode : 'true',
+        label : "Online"
+      },
+      {
+        mode : 'null',
+        label : "Hybird"
+      },
+    ]
+
+      const pickDate: DatePickerProps<Dayjs[]>['onChange'] = (date, dateString) => {
+        console.log(date, dateString);
+      };
+
     let showImage = (type : string,e : ChangeEvent<HTMLInputElement>,setFieldValue : SetFieldValue) => {
     if(e.currentTarget.files){
     if(!selectedBackdropImage && type === 'backdrop'){
       let backdropImg = e.currentTarget.files[0]
       let imageUrl = URL.createObjectURL(backdropImg)
       setSelectedBackdropImage(imageUrl)
-      setFieldValue('coverImage',backdropImage)
+      setFieldValue("backdrop",backdropImg);
+
     }
     if(!selectedIconImage && type == 'icon'){
       let iconImg = e.currentTarget.files[0]
       let imageUrl = URL.createObjectURL(iconImg)
       setSelectedIconImage(imageUrl)
-      setFieldValue('iconImage',iconImg)
+      setFieldValue('backdrop',iconImg)
     }
       console.log(e.currentTarget.files)
     }
         }
         
-    let removeShownImage = (type:string) => {
+    let removeShownImage = (setFieldValue : SetFieldValue,type:string) => {
         switch (type) {
           case 'icon':
             setSelectedIconImage(null);
+            setFieldValue("icon",null);
             if( iconImage.current)
               iconImage.current.value == null
             break;
 
           default:
           setSelectedBackdropImage(null);
+          setFieldValue("backdrop",null);
           if( backdropImage.current)
             backdropImage.current.value == null
             break;
-        }
-            // setFieldValue('coverImage',null);
-           
-           
+        }         
         }
       
     let selectCategory = (event : ChangeEvent<HTMLSelectElement>) => {
-      console.log(event.currentTarget.value)
       setCategoryOption(event.currentTarget.value)
     }
 
     let addCategory = (category: string) => {
       console.log(category)
       setCategoryArray(categoryArr =>[...categoryArr,category])
+      categoryData?.push(category)
+      console.log(categoryData,'formmin')
+      setFieldValue("categories",JSON.stringify(categoryData))
     }
+
+    const handleSubmit: FormProps<BLOG>['onFinish'] = (values) => {
+      console.log('Success:', values);
+    };
 
     return (
       
 <div className="absolute z-[9] top-0 w-full h-[100vh] bg-main">
 <div className="flex flex-col sm:w-[80%] w-[400px] mt-[60px] m-auto gap-[30px] justify-center h-fit ">
-<Form onSubmit={handleSubmit} className='flex flex-col w-full gap-[10px]'>
-        <p className="fontcl main-f text-[22px] w-[100%]">{create ? 'Post new blog' : 'Update blog' }</p>
-        <div className="flex flex-col gap-[5px] w-full">
-      <label className='text-[15px] fontcl main-f' htmlFor="title">Post Title</label>
-      <Field className="w-full inp main-f fontcl text-[15px] h-[41px]" type='title' id='title' placeholder="Title" name="title"/>
-        </div>
-        <div className="flex flex-col gap-[5px] w-full">
-      <label className='text-[15px] fontcl main-f' htmlFor="url">App link url</label>
-      <Field className="w-full inp main-f fontcl text-[15px] h-[41px]"  type='text' id='url' placeholder="www.example-url.com" name="url"/>
-        </div>
-        <div className="flex flex-col gap-[5px] w-full">
-      <label className='text-[15px] fontcl main-f' htmlFor="size">App size</label>
-      <Field className="w-full inp main-f fontcl text-[15px] h-[41px]"  type='text' id='size' placeholder="Size in mb or gb" name="size"/>
-        </div>
-        <div className="flex flex-col gap-[5px] w-full">
-      <label className='text-[15px] fontcl main-f' htmlFor="releasedDate">App's released date</label>
-      <Field className="w-full inp main-f fontcl text-[15px] h-[41px]"  type='text' id='releasedDate' placeholder="Released date" name="releasedDate"/>
-        </div>
-        <div className="flex flex-col gap-[5px] w-full">
-      <label className='text-[15px] fontcl main-f' htmlFor="rating">Rating</label>
-      <Field className="w-full inp main-f fontcl text-[15px] h-[41px]"  type='text' id='rating'  placeholder="out of 5" name="rating"/>
-        </div>
-        <div className="flex flex-col gap-[5px] w-full">
-      <label className='text-[15px] fontcl main-f' htmlFor="status">Set app's status</label>
-      <Field
-        className=" inp main-f fontcl text-[15px] bcu h-[41px]"
-         name="status" as="select">
-         <option className={'bcu'} value="online">Online</option>
-         <option className={'bcu'} value="offline">Offline</option>
-         <option className={'bcu'} value="any">Hybird</option>
-       </Field>
-        </div>
+  <Form
+  className='flex flex-col w-full gap-[10px]'
+  layout='vertical'
+  name="basic"
+  onFinish={handleSubmit}
+  autoComplete="off"
+>
+<p className="fontcl main-f text-[22px] w-[100%]">{create ? 'Post new blog' : 'Update blog' }</p>
+
+        <Form.Item<BLOG>
+      label="Blog title"
+      name="title"
+      rules={[{ required: true, message: 'Title must not be empty.' }]}
+    >
+      <Input className="w-full inp main-f fontcl text-[15px] h-[41px]" placeholder={'Title'} />
+      </Form.Item>
+      <Form.Item<BLOG>
+      label="App link url"
+      name="url"
+      rules={[{ required: true, message: 'Url field must not be empty.' }]}
+    >
+      <Input className="w-full inp main-f fontcl text-[15px] h-[41px]" placeholder={'App url link'} />
+      </Form.Item>
+      <Form.Item<BLOG>
+      label="App size"
+      name="size"
+      rules={[{ required: true, message: 'Size field must not be empty.' }]}
+    >
+      <Input className="w-full inp main-f fontcl text-[15px] h-[41px]" placeholder={'Size in mb or gb'} />
+      </Form.Item>
+      <Form.Item<BLOG>
+      label="App's released date"
+      name="releasedDate"
+      rules={[{ required: true, message: 'Released date field must not be empty.' }]}
+    >
+      <DatePicker onChange={pickDate} className="w-full inp main-f fontcl text-[15px] h-[41px]" placeholder={'Released date of app'} />
+      </Form.Item>
+      <Form.Item<BLOG>
+      label="Rating (rate out of 5)"
+      name="rating"
+      rules={[
+        {
+           required: true,
+           message: 'Rating field must not be empty.',
+          }
+        ]}
+    >
+      <Input className="w-full inp main-f fontcl text-[15px] h-[41px]" placeholder={'Rating'} />
+      </Form.Item>
+      <Form.Item<BLOG>
+      label="Set app status"
+      name="isOnline"
+      rules={[
+        {
+           required: true,
+           message: 'Status field must not be empty.',
+          }
+        ]}
+    >
+      <Select className="w-full inp main-f fontcl text-[15px] h-[41px]">
+        {
+          status.map((status)=>(
+            <Option value={status.mode}>{status.label}</Option>
+          ))
+        }
+      </Select>
+      <Input className="w-full inp main-f fontcl text-[15px] h-[41px]" placeholder={'Rating'} />
+      </Form.Item>
+     
         <div className="flex flex-col gap-[5px] w-full">
       <label className='text-[15px] fontcl main-f' htmlFor="categories">Manage Category</label>
       <div className="flex items-center gap-[20px]">
@@ -123,6 +186,7 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
          name="categoryData"
          onChange={(e)=>selectCategory(e)}
          >
+        <option selected className={'bcu'} disabled value={""}>Select Category</option>
       {
         categories.map((category,idx) => (
           <option key={idx} className={'bcu'} value={category.name}>{category.name}</option>
@@ -146,7 +210,7 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
       <label className='text-[15px] fontcl main-f' htmlFor="icon">Add icon picture</label>
       {
         selectedIconImage &&
-        <div onClick={()=>removeShownImage('icon')} className='bcu text-red-600 text-[16px]'>
+        <div onClick={()=>removeShownImage(setFieldValue,'icon')} className='bcu text-red-600 text-[16px]'>
 <IoIosRemoveCircleOutline />
       </div>
       }
@@ -173,7 +237,7 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
       <label className='text-[15px] fontcl main-f' htmlFor="icon">Add backdrop picture</label>
       {
         selectedBackdropImage &&
-        <div onClick={()=>removeShownImage('backdrop')} className='bcu text-red-600 text-[16px]'>
+        <div onClick={()=>removeShownImage(setFieldValue,'backdrop')} className='bcu text-red-600 text-[16px]'>
 <IoIosRemoveCircleOutline />
       </div>
       }
@@ -200,7 +264,8 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOGFORM>) => {
       <Field as="textarea" className="w-full inp main-f fontcl text-[15px] h-[201px]"  type='text' id='overview' placeholder="Overview" name="overview"/>
         </div>
         <button type='submit' className="btn1 main-f text-[15px] trans">{create ? "Post Blog" : "Update Blog" }</button>
-      </Form>
+</Form>
+        
 </div>
 </div>
       

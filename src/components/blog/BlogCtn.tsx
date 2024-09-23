@@ -16,10 +16,10 @@ const BlogCtn = ({
         blogs.map((blog,index)=>(
           <Blog 
           title={blog.title}
-          poster={blog.poster}
+          icon={blog.icon}
           isOnline={blog.isOnline}
           rating={blog.rating}
-          category={blog.category}
+          categories={blog.categories}
           />
         ))
       }
