@@ -7,7 +7,7 @@ import { BLOG, BLOGFORM } from '../../utils/interfaces/blog';
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import './index.css'
 import { categories } from '../../utils/data';
-import { DatePicker, DatePickerProps, Form, FormProps, Input,Select } from 'antd';
+import { Checkbox, DatePicker, DatePickerProps, Form, FormProps, GetProp, Input,Select, SelectProps } from 'antd';
 import { Dayjs } from 'dayjs';
 import { Option } from 'antd/es/mentions';
 
@@ -26,7 +26,7 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
       } = props;
 
       let [categoryArray,setCategoryArray] = useState<string[]>([])
-      let [categoryOption,setCategoryOption] = useState<string>('')
+      let categoryOptions : SelectProps["options"] = [];
 
       let [selectedBackdropImage,setSelectedBackdropImage] = useState<string | null>(null);
       let [selectedIconImage,setSelectedIconImage] = useState<string | null>(null);
@@ -48,20 +48,31 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
       },
     ]
 
+    for (let i = 0; i < categories.length; i++) {
+      categoryOptions.push({
+        label : categories[i].name,
+        value : categories[i].name
+      })
+    }
+
       const pickDate: DatePickerProps<Dayjs[]>['onChange'] = (date, dateString) => {
         console.log(date, dateString);
       };
 
+      const pickCategories = (value: string[]) => {
+        console.log(`selected ${value}`);
+      };
+
     let showImage = (type : string,e : ChangeEvent<HTMLInputElement>,setFieldValue : SetFieldValue) => {
     if(e.currentTarget.files){
-    if(!selectedBackdropImage && type === 'backdrop'){
+    if( type === 'backdrop'){
       let backdropImg = e.currentTarget.files[0]
       let imageUrl = URL.createObjectURL(backdropImg)
       setSelectedBackdropImage(imageUrl)
       setFieldValue("backdrop",backdropImg);
 
     }
-    if(!selectedIconImage && type == 'icon'){
+    if( type == 'icon'){
       let iconImg = e.currentTarget.files[0]
       let imageUrl = URL.createObjectURL(iconImg)
       setSelectedIconImage(imageUrl)
@@ -88,18 +99,6 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
             break;
         }         
         }
-      
-    let selectCategory = (event : ChangeEvent<HTMLSelectElement>) => {
-      setCategoryOption(event.currentTarget.value)
-    }
-
-    let addCategory = (category: string) => {
-      console.log(category)
-      setCategoryArray(categoryArr =>[...categoryArr,category])
-      categoryData?.push(category)
-      console.log(categoryData,'formmin')
-      setFieldValue("categories",JSON.stringify(categoryData))
-    }
 
     const handleSubmit: FormProps<BLOG>['onFinish'] = (values) => {
       console.log('Success:', values);
@@ -168,43 +167,26 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
           }
         ]}
     >
-      <Select className="w-full inp main-f fontcl text-[15px] h-[41px]">
+      <select className="bcu inp w-full main-f fontcl text-[15px] h-[41px]">
         {
           status.map((status)=>(
-            <Option value={status.mode}>{status.label}</Option>
+            <option className={'text-[15px] bcu main-f fontcl'} value={status.mode}>{status.label}</option>
           ))
         }
-      </Select>
-      <Input className="w-full inp main-f fontcl text-[15px] h-[41px]" placeholder={'Rating'} />
+      </select>
       </Form.Item>
-     
-        <div className="flex flex-col gap-[5px] w-full">
-      <label className='text-[15px] fontcl main-f' htmlFor="categories">Manage Category</label>
-      <div className="flex items-center gap-[20px]">
-      <select
-        className=" inp main-f fontcl text-[15px] bcu h-[41px]"
-         name="categoryData"
-         onChange={(e)=>selectCategory(e)}
-         >
-        <option selected className={'bcu'} disabled value={""}>Select Category</option>
-      {
-        categories.map((category,idx) => (
-          <option key={idx} className={'bcu'} value={category.name}>{category.name}</option>
-        ))
-      }
-       </select>
-       <button type="button" onClick={()=>addCategory(categoryOption)} className="btn1 w-[70px] main-f text-[15px] trans">Save</button>
-      </div>
-        </div>
-        <div className="flex flex-warp items-center gap-[15px]">
-    {
-            categoryArray.length !== 0 &&
-            categoryArray.map((category,idx) => (
-              <div key={idx} className="bg-[#e2f7ff] rounded-[7px] text-[14px] main-f fpntcl w-fit h-fit px-[10px] py-[4px]">{category}</div>      
-            ))
-          }
 
-        </div>
+   <div className="flex flex-col gap-[10px]">
+        <p className="main-f fontcl text-[14px]">Add category</p>
+        <Select
+      className='main-f fontcl text-[14px] h-[41px]'
+      mode="multiple"
+      allowClear
+      placeholder="Add categories"
+      onChange={pickCategories}
+      options={categoryOptions}
+    />
+   </div>
         <div className="flex flex-col gap-[5px] w-full main-f">
       <div className="flex items-center gap-[10px]">
       <label className='text-[15px] fontcl main-f' htmlFor="icon">Add icon picture</label>
@@ -215,7 +197,7 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
       </div>
       }
       </div>
-        <input multiple onChange={(e)=>showImage('icon',e,setFieldValue)} type="file" ref={iconImage} hidden id='icon' name='icon' className='fontcl text-[16px] main-f w-full'/ >
+        <input multiple style={{display : "none"}} onChange={(e)=>showImage('icon',e,setFieldValue)} type="file" ref={iconImage} hidden id='icon' name='icon'/ >
                       {
                           selectedIconImage ?
                           <div onClick={()=>iconImage.current?.click()} className="w-[80px] h-[80px] relative rounded-[10px] bcu">
@@ -242,7 +224,7 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
       </div>
       }
       </div>
-              <input multiple onChange={(e)=>showImage('backdrop',e,setFieldValue)} type="file" ref={backdropImage} hidden id='backdrop' name='backdrop' className='fontcl text-[16px] main-f w-full'/ >
+              <input multiple style={{display : "none"}} onChange={(e)=>showImage('backdrop',e,setFieldValue)} type="file" ref={backdropImage} hidden id='backdrop' name='backdrop'/ >
                       {
                           selectedBackdropImage ?
                           <div onClick={()=>backdropImage.current?.click()} className="w-full h-[200px] relative rounded-[10px] bcu">
@@ -259,10 +241,13 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
                       </div>
                       }
              </div>
-        <div className="flex flex-col gap-[5px] w-full">
-      <label className='text-[15px] fontcl main-f' htmlFor="overview">Overview</label>
-      <Field as="textarea" className="w-full inp main-f fontcl text-[15px] h-[201px]"  type='text' id='overview' placeholder="Overview" name="overview"/>
-        </div>
+      <Form.Item<BLOG>
+      label="Overview"
+      name="overview"
+      rules={[{ required: true, message: 'Overview field must not be empty.' }]}
+    >
+      <Input.TextArea style={{height : '260px'}} className="w-full inp main-f fontcl text-[15px]" placeholder={'Overview'} />
+      </Form.Item>
         <button type='submit' className="btn1 main-f text-[15px] trans">{create ? "Post Blog" : "Update Blog" }</button>
 </Form>
         
