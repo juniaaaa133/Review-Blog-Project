@@ -1,0 +1,9 @@
+.access-txt {
+    background-color: inherit;
+    padding: 4px 15px;
+    border-radius: 8px;
+    width: fit-content;
+}
+.access-txt:hover {
+    background-color:#f2f9fbfc;
+}
