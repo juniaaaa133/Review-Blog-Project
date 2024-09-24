@@ -1,8 +1,8 @@
 import React from 'react'
-import BlogForm from '../../../components/blogform/BlogForm'
+import BlogFormComp from '../../../components/blogform/BlogFormComp'
 
 const CreateBlogPage = () => {
-  return <BlogForm create={true} categoryData={[]} />
+  return <BlogFormComp create={true} categoryData={[]} />
 }
 
 export default CreateBlogPage
