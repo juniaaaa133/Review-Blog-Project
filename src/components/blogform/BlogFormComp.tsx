@@ -1,4 +1,3 @@
-import { Field, FormikProps, FormikProvider, FormikValues } from 'formik'
 import React, { ChangeEvent, useRef, useState } from 'react'
 import { SetFieldValue } from '../../utils/interfaces/formik';
 import { TbPhotoEdit } from 'react-icons/tb';
@@ -16,13 +15,11 @@ interface BlogProps extends BLOG {
   categoryData? : string[]
 }
 
-const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
+const BlogFormComp = (props: BlogProps) => {
 
       const {
         create,
         categoryData,
-        errors,
-        setFieldValue,
       } = props;
 
       let [categoryArray,setCategoryArray] = useState<string[]>([])
@@ -63,37 +60,32 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
         console.log(`selected ${value}`);
       };
 
-    let showImage = (type : string,e : ChangeEvent<HTMLInputElement>,setFieldValue : SetFieldValue) => {
+    let showImage = (type : string,e : ChangeEvent<HTMLInputElement>) => {
     if(e.currentTarget.files){
     if( type === 'backdrop'){
       let backdropImg = e.currentTarget.files[0]
       let imageUrl = URL.createObjectURL(backdropImg)
       setSelectedBackdropImage(imageUrl)
-      setFieldValue("backdrop",backdropImg);
-
     }
     if( type == 'icon'){
       let iconImg = e.currentTarget.files[0]
       let imageUrl = URL.createObjectURL(iconImg)
       setSelectedIconImage(imageUrl)
-      setFieldValue('backdrop',iconImg)
     }
       console.log(e.currentTarget.files)
     }
         }
         
-    let removeShownImage = (setFieldValue : SetFieldValue,type:string) => {
+    let removeShownImage = (type:string) => {
         switch (type) {
           case 'icon':
             setSelectedIconImage(null);
-            setFieldValue("icon",null);
             if( iconImage.current)
               iconImage.current.value == null
             break;
 
           default:
           setSelectedBackdropImage(null);
-          setFieldValue("backdrop",null);
           if( backdropImage.current)
             backdropImage.current.value == null
             break;
@@ -192,12 +184,12 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
       <label className='text-[15px] fontcl main-f' htmlFor="icon">Add icon picture</label>
       {
         selectedIconImage &&
-        <div onClick={()=>removeShownImage(setFieldValue,'icon')} className='bcu text-red-600 text-[16px]'>
+        <div onClick={()=>removeShownImage('icon')} className='bcu text-red-600 text-[16px]'>
 <IoIosRemoveCircleOutline />
       </div>
       }
       </div>
-        <input multiple style={{display : "none"}} onChange={(e)=>showImage('icon',e,setFieldValue)} type="file" ref={iconImage} hidden id='icon' name='icon'/ >
+        <input multiple style={{display : "none"}} onChange={(e)=>showImage('icon',e)} type="file" ref={iconImage} hidden id='icon' name='icon'/ >
                       {
                           selectedIconImage ?
                           <div onClick={()=>iconImage.current?.click()} className="w-[80px] h-[80px] relative rounded-[10px] bcu">
@@ -219,12 +211,12 @@ const BlogFormComp = (props: BlogProps & FormikProps<BLOG>) => {
       <label className='text-[15px] fontcl main-f' htmlFor="icon">Add backdrop picture</label>
       {
         selectedBackdropImage &&
-        <div onClick={()=>removeShownImage(setFieldValue,'backdrop')} className='bcu text-red-600 text-[16px]'>
+        <div onClick={()=>removeShownImage('backdrop')} className='bcu text-red-600 text-[16px]'>
 <IoIosRemoveCircleOutline />
       </div>
       }
       </div>
-              <input multiple style={{display : "none"}} onChange={(e)=>showImage('backdrop',e,setFieldValue)} type="file" ref={backdropImage} hidden id='backdrop' name='backdrop'/ >
+              <input multiple style={{display : "none"}} onChange={(e)=>showImage('backdrop',e)} type="file" ref={backdropImage} hidden id='backdrop' name='backdrop'/ >
                       {
                           selectedBackdropImage ?
                           <div onClick={()=>backdropImage.current?.click()} className="w-full h-[200px] relative rounded-[10px] bcu">
