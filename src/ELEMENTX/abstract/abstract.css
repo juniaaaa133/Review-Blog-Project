@@ -116,9 +116,8 @@ body {  scroll-behavior: smooth; padding: 0px; margin: 0; background-color: var(
     width:.5px;
     background-color: #a8a8a8;;
 }
-/* .sec-f {      
-    font-family: 'Didact Gothic';
-} */
+
+
 .main-f { 
     font-family: 'Syne Variable';
 }
@@ -268,6 +267,24 @@ body {  scroll-behavior: smooth; padding: 0px; margin: 0; background-color: var(
 }
 .iteM-ctn {
     width:210px;
+}
+.loading {
+    animation-name: loading;
+    animation-iteration-count: infinite;
+    animation-duration: .4s;
+    background-color: #ebebeb;
+}
+
+@keyframes loading {
+    0% {
+    opacity: .6;
+    }
+    50% {
+    opacity:  1;
+    }
+    50% {
+    opacity:  .6;
+    }
 }
 
 @media (max-width: 1024px) {

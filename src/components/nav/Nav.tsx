@@ -1,22 +1,56 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { FiMenu } from "react-icons/fi";
 import { RxCross1 } from "react-icons/rx";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, redirect } from 'react-router-dom';
 import { CiSearch } from "react-icons/ci";
 import { TbSearchOff } from "react-icons/tb";
 import { IoShieldCheckmark } from "react-icons/io5";
-
 import './index.css'
+import { BLOG } from '../../utils/interfaces/blog';
+import { callSearchProuct } from '../../utils/apis/calls/product';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useDispatch } from 'react-redux';
+import { storeToken, storeUser } from '../../redux/slices/userSlice';
 
 const Nav = () => {
 
   const [isOpened,setIsOpened] = useState<boolean>(false);
   const [isOpenedPfp,setIsOpenedPfp] = useState<boolean>(false);
-  const [dummyUserAuth,setDummyUserAuth] = useState<boolean>(true);
+  const [dummyUserAuth,setDummyUserAuth] = useState<boolean>(false);
   const [isOpenedSearchBar,setIsOpenedSearchBar] = useState<boolean>(false);
-  const text = "example@gmail.com";
-  let userStatus = 'admin';
+  const {
+    role,
+    username,
+    email,
+    pfp,
+    _id
+  } = useSelector((state : RootState) => state.reducer.user.user);
+  let dispatch = useDispatch();
 
+  let [blogs,setBlogs] = useState<BLOG[]>([]);
+
+  const searchBlog = async (e : ChangeEvent<HTMLInputElement>) => {
+  if(e.currentTarget.value.trim() == "" ){
+  setBlogs([]);
+  return;
+  }
+  const res = await callSearchProuct(e.currentTarget.value)
+  const modifiedBlogs : BLOG[] = JSON.parse(res.data).blogs;
+
+  if(res.status !== 200 || modifiedBlogs.length == 0){
+  setBlogs([]);
+  return;
+  }
+  setBlogs(modifiedBlogs)
+  }
+
+  const logout = () => {
+  dispatch(storeToken(undefined));
+  dispatch(storeUser({}))
+  localStorage.removeItem("token")
+  redirect("/")
+  }
   return (
  <>
     <div className={`sticky z-[7] top-0 flex justify-between items-center w-full h-[55px] py-[10px] px-[40px] bg-white shadow-md`}>
@@ -26,7 +60,13 @@ const Nav = () => {
   <div className="flex ml-[30px] items-center gap-[20px]">
   <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
         <NavLink to={'/categories'} className={`md:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
-        <NavLink to={'/admin/users'} className={`md:hidden fontcl2H text-[15px] main-f`} > Users</NavLink>
+{
+role == "admin" && <NavLink to={'/admin/users'} className={`md:hidden fontcl2H text-[15px] main-f`} > Users</NavLink>
+}
+{
+  localStorage.getItem("token") && role &&
+  <NavLink to={'/'} onClick={logout} className={`md:hidden fontcl2H text-[15px] main-f`} >Logout</NavLink>
+}
 
   </div>
 
@@ -43,57 +83,61 @@ const Nav = () => {
       }
     </div>
     {
-      userStatus == 'admin' ?
+      role == 'admin' ?
       <div onClick={()=>setIsOpenedPfp(!isOpenedPfp)} className="relative w-fit h-fit">
-              <img  src={'/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
+              <img  src={pfp ? `${import.meta.env.VITE_API}/api/${pfp}` : '/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
       <div className="absolute bottom-[-5px] right-[-4px] w-fit h-fit text-[14px] fontcl4 rotate-[0deg]">
         < IoShieldCheckmark />
       </div>
       </div>
       :
-      <img onClick={()=>setIsOpenedPfp(!isOpenedPfp)} src={'/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
+      <img onClick={()=>setIsOpenedPfp(!isOpenedPfp)} src={pfp ? `${import.meta.env.VITE_API}/api/${pfp}` : '/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
     }
       </div>
     </div>
-    <div  className={`fixed z-[5] w-full flex trans  flex-col items-center h-fit bg-[#ffffff] p-[10px] ${isOpenedSearchBar ? 'top-[55px]' : "top-[-60px]"}`}>
-    <div className={`md:w-[80%] sm:w-[95%] w-[500px] gap-[15px] flex flex-col`}>
-      <div className="flex items-center gap-[15px]">
-      <input type="text" placeholder={'Search'} className="text-[15px] fontcl main-f inp" />
+    <div onClick={()=>setIsOpenedSearchBar(false)} className={`fixed z-[4] w-full h-[100vh] bg-[#2121213d] ${isOpenedSearchBar ? 'top-[55px]' : "hidden"}`}></div>
+    <div className={`fixed z-[5] w-full flex trans flex-col items-center h-fit  ${isOpenedSearchBar ? 'top-[55px]' : "top-[-60px]"}`}>
+    <div className={`w-full p-[10px] px-[40px] items-center bg-[#ffffff] gap-[15px] flex flex-col`}>
+      <div className="flex  items-center w-[500px] md:w-[50%] sm:w-[80%] gap-[15px]">
+      <input onChange={(e)=>searchBlog(e)} type="text" placeholder={'Search'} className="text-[15px] fontcl main-f inp" />
       <div className="text-[12px] bcu">
         <RxCross1 />
       </div>
       </div>
-    <div className="shadow-md w-full bg-[#fffcfc] flex flex-col gap-[8px] h-fit">
-      {/* <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link>
-      <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link>
-      <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link>
-      <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link>
-      <Link to='/' className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>Smashing Four</Link> */}
-
     </div>
+        <div className={`shadow-md w-[500px] md:-[50%] sm:w-[80%] bg-[#fffcfc] flex flex-col gap-[8px] h-fit ${!isOpenedSearchBar || blogs.length == 0 && "hidden"}`}>
+        {
+        blogs.map(({title,_id},index) => (
+        <Link key={index} to={`/${_id}`} onClick={()=>{
+          setBlogs([])
+          setIsOpenedSearchBar(false)
+        }} className={'trans w-full srh-res bcu text-[15px] fontcl3 main-f px-[20px] py-[5px] hover:bg-[#e8e8e8]'}>{title}</Link>
+        ))
+      }
+
     </div>
     </div>
 
     <div className={`${isOpenedPfp ? 'flex' : 'hidden'} shadow-lg fixed z-[8] flex-col gap-[20px] right-[40px] top-[50px] w-[270px] h-fit p-[20px] bg-white`}>
       <h2 className="main-f fontcl3 text-[15px]">Profile Setting</h2>
    {
-    dummyUserAuth ?
+    role ?
     <div className="flex gap-[10px]">
       {
-        userStatus == 'admin' ?
+        role == 'admin' ?
         <div onClick={()=>setIsOpenedPfp(!isOpenedPfp)} className="relative w-fit h-fit">
-<img src="https://i.pinimg.com/736x/a0/4d/4e/a04d4ee826a4e4096841ebf18f0d5e7a.jpg" alt="" className="rounded-full border-blue-400 border-[1px] w-[50px] h-[50px] pic" />
+<img src={pfp ? `${import.meta.env.VITE_API}/api/${pfp}` : '/static-imgs/user.jpg'} alt="" className="rounded-full border-blue-400 border-[1px] w-[50px] h-[50px] pic" />
 <div className="absolute bottom-[-4px] right-[-2px] w-fit h-fit text-[16px] fontcl4 rotate-[0deg]">
   < IoShieldCheckmark />
 </div>
 </div>
 :
-<img src="https://i.pinimg.com/736x/a0/4d/4e/a04d4ee826a4e4096841ebf18f0d5e7a.jpg" alt="" className="rounded-full w-[50px] h-[50px] pic" />
+<img src={pfp ? `${import.meta.env.VITE_API}/api/${pfp}` : '/static-imgs/user.jpg'} alt="" className="rounded-full w-[50px] h-[50px] pic" />
       }
       <div className="flex flex-col gap-[2px] main-f ">
-        <p className="fontcl text-[14px]">Rein Ogga Myo</p>
-        <p className="fontcl3 text-[13px]">{text.length > 20 ? text.substring(0,20) + '...' : text }</p>
-        <Link onClick={()=>setIsOpenedPfp(false)} to={'/my-account/admin@gmail.com'} className="btn2 text-[14px] main-f mt-[20px] trans">Manage accuont</Link>
+        <p className="fontcl text-[14px]">{username && username.length > 22 ? username.substring(0,22) + '...' : username}</p>
+        <p className="fontcl3 text-[13px]">{email && email.length > 20 ? email.substring(0,20) + '...' : email }</p>
+        <Link onClick={()=>setIsOpenedPfp(false)} to={`/account/${email}`} className="btn2 text-[14px] main-f mt-[20px] trans">Manage accuont</Link>
       </div>
     </div>
     :
@@ -117,7 +161,13 @@ const Nav = () => {
       <div className="flex flex-col gap-[10px] mt-[10px]">
   <NavLink to={'/'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
         <NavLink to={'/categories'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
-        <NavLink to={'/admin/users'} className={`md:hidden fontcl2H text-[15px] main-f`} > Users</NavLink>
+{
+  role == "admin" && <NavLink to={'/admin/users'} className={`MD:hidden fontcl2H text-[15px] main-f`} > Users</NavLink>
+}
+{
+  localStorage.getItem("token") && role &&
+  <NavLink to={'/'} onClick={logout} className={`MD:hidden fontcl2H text-[15px] main-f`} >Logout</NavLink>
+}
       </div>
     </div>
  </>

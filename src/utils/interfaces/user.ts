@@ -1,4 +1,5 @@
 export interface User {
+    _id? : string
     email? : string,
     password? : string,
     pfp? : string | null,
@@ -6,4 +7,6 @@ export interface User {
     isSuspended? : boolean,
     role? : string
     joinedDate? : string | Date
+    authToken? : string ,
+    tokenExp? : string
 }

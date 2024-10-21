@@ -1,4 +1,5 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter,  RouterProvider } from "react-router-dom";
+import {Outlet} from "react-router"
 import Blog from "./components/blog/Blog";
 import Layout from "./components/router-layout/Layout";
 import Home from "./page/home/Home";
@@ -8,7 +9,11 @@ import FIlteredPage from "./page/filteredPage/FIlteredPage";
 import BlogDetail from "./page/blog-detail/BlogDetail";
 import UserPage from "./page/admin/users/UserPage";
 import CreateBlogPage from "./page/admin/products/CreateBlogPage";
-import UserDetail from "./page/admin/user-detail/UserDetail";
+import EditBlogPage from "./page/admin/products/EditBlogPage";
+import VerifyUser from "./page/verify-page/VerifyUser";
+import EmailSent from "./page/verify-page/EmailSent";
+import UserForm from "./page/admin/user-detail/UserForm";
+import AuthMiddleware from "./middleware/AuthMiddleware";
 
 export function App() {
 
@@ -34,8 +39,10 @@ export function App() {
           element : <FIlteredPage />
         },
         {
-          path : "/my-account/:id",
-          element : <UserDetail create={false} authAccount="admin@gmail.com"/>,
+          path : "/account/:id",
+          element : <AuthMiddleware isMounted={false}>
+            <UserForm/>
+          </AuthMiddleware>
         },
         {
           path : "/login",
@@ -47,10 +54,15 @@ export function App() {
         },
         {
           path : "/admin",
+          element : <AuthMiddleware isMounted={true}/>,
           children : [
             {
               path : "/admin/create-blog",
               element : <CreateBlogPage />,
+            },
+            {
+              path : "/admin/blog/:id",
+              element : <EditBlogPage />
             },
             {
               path : "/admin/users",
@@ -58,17 +70,21 @@ export function App() {
             },
             {
               path : "/admin/users/:id",
-              element : <UserDetail create={false} authAccount=""/>,
-            },
-            {
-              path : "/admin/add-user",
-              element : <UserDetail create={true} authAccount=""/>,
-            },
+              element : <UserForm  />,
+            }
           ]
         },
       ]
 
-    }
+    },
+    {
+      path : "/verify-user/:token",
+      element : <VerifyUser />
+    },
+    {
+      path : "/verification",
+      element : <EmailSent />
+    },
   ])
 
   return <RouterProvider router={router} />

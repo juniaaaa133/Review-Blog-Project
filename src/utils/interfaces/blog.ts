@@ -1,14 +1,16 @@
 export interface BLOG {
+    _id : string,
     title? : string,
     icon? : string,
     rating? : string,
-    isOnline? : boolean | null,
-    categories? : string[],
+    isOnline? : string ,
+    categories : {_id: string,name:string}[],
     size? : string,
     overview? : string,
     backdrop? : string,
-    url? : string,
+    gameUrl? : string,
     releasedDate? : string,
+    intro? : string
 }
 
 export interface BLOGFORM {
