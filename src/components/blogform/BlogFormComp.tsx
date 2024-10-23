@@ -114,7 +114,7 @@ break;
 }
 
 const handleSubmit: FormProps<BLOG>['onFinish'] = async (values) => {
-let res;
+console.log(iconFile,backdropFile)
 values.title && formData.append("title",values.title);
 values.intro && formData.append("intro",values.intro);
 values.overview && formData.append("overview",values.overview);
@@ -129,8 +129,8 @@ backdropFile && formData.append("backdrop",backdropFile);
 
 try {
 create ?
- res = await callAddProduct(formData) :
- res = await callEditProduct(id,formData)
+await callAddProduct(formData) :
+await callEditProduct(id,formData)
 redirect("/")
 } catch (error) {
 setMessage("Please check your form and try again.")
