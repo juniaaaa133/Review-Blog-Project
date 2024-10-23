@@ -27,7 +27,7 @@ fetchFilteredProduct();
 
   return (
   <div className="flex flex-col gap-[20px] mt-[20px] px-[20px]">
-  <p className="main-f fontcl text-[20px] mt-[30px]">{`${!status || status == 'any' ? '' : status} ${category} games`}</p>
+  <p className="main-f fontcl text-[20px] mt-[30px]">{`${category} ${!status || status == 'any' ? '' : status} games`}</p>
   <BlogCtn blogs={filteredBlogs} />
   </div>
   )
