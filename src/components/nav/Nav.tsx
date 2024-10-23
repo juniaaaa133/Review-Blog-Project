@@ -49,6 +49,7 @@ const Nav = () => {
   dispatch(storeToken(undefined));
   dispatch(storeUser({}))
   localStorage.removeItem("token")
+  setIsOpened(false)
   redirect("/")
   }
   return (
@@ -56,7 +57,7 @@ const Nav = () => {
     <div className={`sticky z-[7] top-0 flex justify-between items-center w-full h-[55px] py-[10px] px-[40px] bg-white shadow-md`}>
       <div className="flex items-center justify-between gap-[15px]">
         <p onClick={()=>setIsOpened(true)} className="MD:hidden text-[20px] bcu"><FiMenu/></p>
-        <h2 className='fontcl2 sm:text-[17px] text-[20px] sys-f'>Mobocat</h2>
+        <Link to="/" className='fontcl2 sm:text-[17px] text-[20px] sys-f'>Mobocat</Link>
   <div className="flex ml-[30px] items-center gap-[20px]">
   <NavLink to={'/'} className={`md:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
         <NavLink to={'/categories'} className={`md:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
@@ -156,17 +157,17 @@ role == "admin" && <NavLink to={'/admin/users'} className={`md:hidden fontcl2H t
     <div className={`${isOpened ? 'left-0' : 'left-[-100%]'} flex flex-col gap-[20px] px-[20px] pt-[8px] fixed z-[8] top-0 w-[200px] h-[100vh] bg-white shadow-sm trans`}>
     <div className=" flex items-center gap-[15px]">
         <p onClick={()=>setIsOpened(false)} className="text-[20px] bcu"><RxCross1/></p>
-        <h2 className='fontcl2 text-[20px] sys-f'>Mobocat</h2>
+        <Link to="/" className='fontcl2 text-[20px] sys-f'>Mobocat</Link>
       </div>
-      <div className="flex flex-col gap-[10px] mt-[10px]">
-  <NavLink to={'/'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
-        <NavLink to={'/categories'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
+      <div className="flex flex-col gap-[40px] mt-[10px]">
+  <NavLink onClick={()=>setIsOpened(false)} to={'/'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Home</NavLink>
+        <NavLink onClick={()=>setIsOpened(false)} to={'/categories'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Category</NavLink>
 {
-  role == "admin" && <NavLink to={'/admin/users'} className={`MD:hidden fontcl2H text-[15px] main-f`} > Users</NavLink>
+  role == "admin" && <NavLink onClick={()=>setIsOpened(false)} to={'/admin/users'} className={`MD:hidden fontcl2H text-[15px] main-f`} > Users</NavLink>
 }
 {
   localStorage.getItem("token") && role &&
-  <NavLink to={'/'} onClick={logout} className={`MD:hidden fontcl2H text-[15px] main-f`} >Logout</NavLink>
+  <NavLink onClick={logout} to={'/'} className={`MD:hidden fontcl2H text-[15px] main-f`} >Logout</NavLink>
 }
       </div>
     </div>
