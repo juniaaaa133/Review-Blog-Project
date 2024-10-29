@@ -57,7 +57,7 @@ role == "admin" && token &&
 </div>
 }
   <div className="flex items-center md:gap-[15px] gap-[20px] ">
-      <img src={`${import.meta.env.VITE_API}/api/${blog.icon}`} alt="" className=" md:w-[45px] md:h-[45px] w-[60px] h-[60px] rounded-[5px] pic" />
+      <img src={blog.icon} alt="" className=" md:w-[45px] md:h-[45px] w-[60px] h-[60px] rounded-[5px] pic" />
       
       <div className=" w-full flex flex-col">
       <div className="flex justify-between ">
@@ -79,13 +79,13 @@ role == "admin" && token &&
   </div>
   <div className="flex flex-col gap-[20px] w-full">
   <pre className="twrap fontcl main-f text-[18px]">{blog.intro} </pre>
-  <img src={`${import.meta.env.VITE_API}/api/${blog.backdrop}`} alt="" className="pic  w-full h-[auto] rounded-[10px]" />
+  <img src={blog.backdrop} alt="" className="pic  w-full h-[auto] rounded-[10px]" />
   <pre className="fontcl twrap main-f text-[18px]">{blog.overview} </pre>
   </div>
   <div className="flex flex-col w-full gap-[60px]">
     <div className="flex w-full justify-between sm:flex-col gap-[30px] min:items-center">
     <div className="flex gap-[15px]">
-    <img src={`${import.meta.env.VITE_API}/api/${blog.icon}`} alt="" className="w-[50px] h-[50px] rounded-[5px] pic" />
+    <img src={blog.icon} alt="" className="w-[50px] h-[50px] rounded-[5px] pic" />
     <div className="flex flex-col gap-[1px]">
     <p className="fontcl main-f md:text-[16px] text-[18px] font-[600]">{blog.title}</p>
     <div className="flex fontcl3 main-f text-[13px] gap-[12px]">

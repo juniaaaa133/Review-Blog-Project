@@ -13,7 +13,7 @@ const Blog = ({
 
   return (
     <Link to={`/${_id}`} className='bl-main bcu shadow-lg'>
-        <img src={`${import.meta.env.VITE_API}/api/${icon}`} alt="" className=" trans pic bl-img" />
+        <img src={icon} alt="" className=" trans pic bl-img" />
         <div className="bl-layout"></div>
         <div className="bl-info">
             <div className="flex flex-col gap-[2px]">

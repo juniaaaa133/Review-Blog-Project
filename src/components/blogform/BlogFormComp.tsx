@@ -22,6 +22,7 @@ const BlogFormComp = (props: BlogProps) => {
 
 const {create,blog} = props;
 
+let [isSubmitting,setIsSubmitting] = useState<boolean>(false);
 let [message,setMessage] = useState<string | null>(null);
 let [categoryArray,setCategoryArray] = useState< SelectProps["options"]>([])
 const categoryOptions : SelectProps["options"] = [];
@@ -29,8 +30,8 @@ let [selectedCategory,setSelectedCategory] = useState<string[]>([]);
 let [isLoading,setIsLoading] = useState<boolean>(true);
 let [backdropFile,setBackdropFile] = useState<File | undefined>();
 let [iconFile,setIconFile] = useState<File | undefined>();
-let [selectedBackdropImage,setSelectedBackdropImage] = useState<string | null>(blog?.backdrop ? `${import.meta.env.VITE_API}/api/${blog.backdrop}`: null);
-let [selectedIconImage,setSelectedIconImage] = useState<string | null>(blog?.icon ? `${import.meta.env.VITE_API}/api/${blog.icon}` : null);
+let [selectedBackdropImage,setSelectedBackdropImage] = useState<string | null>(blog?.backdrop ? blog.backdrop: null);
+let [selectedIconImage,setSelectedIconImage] = useState<string | null>(blog?.icon ? blog.icon : null);
 let backdropImage = useRef<HTMLInputElement | null>(null);
 let iconImage = useRef<HTMLInputElement | null>(null);
 let redirect = useNavigate();
@@ -104,7 +105,7 @@ iconImage.current.value == null
 setIconFile(undefined);
 break;
 
-default:
+default:1
 setSelectedBackdropImage(null);
 if( backdropImage.current)
 backdropImage.current.value == null
@@ -114,7 +115,7 @@ break;
 }
 
 const handleSubmit: FormProps<BLOG>['onFinish'] = async (values) => {
-console.log(iconFile,backdropFile)
+setIsSubmitting(true);    
 values.title && formData.append("title",values.title);
 values.intro && formData.append("intro",values.intro);
 values.overview && formData.append("overview",values.overview);
@@ -135,6 +136,7 @@ redirect("/")
 } catch (error) {
 setMessage("Please check your form and try again.")
 }
+setIsSubmitting(false);
 };
 
 return (
@@ -302,7 +304,11 @@ selectedBackdropImage ?
  {
   message !== null && <ErrorMsg text={message} />
  }
-<button type='submit' className="btn1 main-f text-[15px] trans">{create ? "Post Blog" : "Update Blog" }</button>
+<button disabled={isSubmitting} type='submit' className="btn1 main-f text-[15px] trans">{
+create ? 
+isSubmitting ? "Posting" : "Post Blog"
+: isSubmitting ? "Updating" : "Update Blog" 
+}</button>
 </Form>
 
 </div>
