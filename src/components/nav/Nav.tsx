@@ -86,13 +86,13 @@ role == "admin" && <NavLink to={'/admin/users'} className={`md:hidden fontcl2H t
     {
       role == 'admin' ?
       <div onClick={()=>setIsOpenedPfp(!isOpenedPfp)} className="relative w-fit h-fit">
-              <img  src={pfp ? `${import.meta.env.VITE_API}/api/${pfp}` : '/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
+              <img  src={pfp ? pfp : '/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
       <div className="absolute bottom-[-5px] right-[-4px] w-fit h-fit text-[14px] fontcl4 rotate-[0deg]">
         < IoShieldCheckmark />
       </div>
       </div>
       :
-      <img onClick={()=>setIsOpenedPfp(!isOpenedPfp)} src={pfp ? `${import.meta.env.VITE_API}/api/${pfp}` : '/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
+      <img onClick={()=>setIsOpenedPfp(!isOpenedPfp)} src={pfp ? pfp : '/static-imgs/user.jpg'} alt="" className="border-[1px] hover:opacity-[.6] bcu trans border-blue-300 pic w-[30px] h-[30px] rounded-full" />
     }
       </div>
     </div>
@@ -127,13 +127,13 @@ role == "admin" && <NavLink to={'/admin/users'} className={`md:hidden fontcl2H t
       {
         role == 'admin' ?
         <div onClick={()=>setIsOpenedPfp(!isOpenedPfp)} className="relative w-fit h-fit">
-<img src={pfp ? `${import.meta.env.VITE_API}/api/${pfp}` : '/static-imgs/user.jpg'} alt="" className="rounded-full border-blue-400 border-[1px] w-[50px] h-[50px] pic" />
+<img src={pfp ? pfp : '/static-imgs/user.jpg'} alt="" className="rounded-full border-blue-400 border-[1px] w-[50px] h-[50px] pic" />
 <div className="absolute bottom-[-4px] right-[-2px] w-fit h-fit text-[16px] fontcl4 rotate-[0deg]">
   < IoShieldCheckmark />
 </div>
 </div>
 :
-<img src={pfp ? `${import.meta.env.VITE_API}/api/${pfp}` : '/static-imgs/user.jpg'} alt="" className="rounded-full w-[50px] h-[50px] pic" />
+<img src={pfp ? pfp : '/static-imgs/user.jpg'} alt="" className="rounded-full w-[50px] h-[50px] pic" />
       }
       <div className="flex flex-col gap-[2px] main-f ">
         <p className="fontcl text-[14px]">{username && username.length > 22 ? username.substring(0,22) + '...' : username}</p>
